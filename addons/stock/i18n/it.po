@@ -26,7 +26,7 @@
 # Léonie Bouchat <lbo@odoo.com>, 2019
 # mymage <stefano.consolaro@mymage.it>, 2019
 # Lorenzo Battistini <lb@takobi.online>, 2019
-# Sergio Zanchetta <primes2h@gmail.com>, 2019
+# Sergio Zanchetta <primes2h@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -34,7 +34,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:25+0000\n"
-"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2019\n"
+"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2020\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1108,7 +1108,7 @@ msgstr "Condizioni"
 #. module: stock
 #: model:ir.model,name:stock.model_res_config_settings
 msgid "Config Settings"
-msgstr "Impostazioni configurazione"
+msgstr "Impostazioni di configurazione"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_config_settings
@@ -2140,7 +2140,7 @@ msgstr "Attività future"
 #: code:addons/stock/models/product.py:333
 #, python-format
 msgid "Future Deliveries"
-msgstr "Consegne Future"
+msgstr "Consegne future"
 
 #. module: stock
 #: code:addons/stock/models/product.py:338
@@ -2152,13 +2152,13 @@ msgstr "P&L future"
 #: code:addons/stock/models/product.py:348
 #, python-format
 msgid "Future Productions"
-msgstr "Produzioni Future"
+msgstr "Produzioni future"
 
 #. module: stock
 #: code:addons/stock/models/product.py:343
 #, python-format
 msgid "Future Qty"
-msgstr "Quantità Future"
+msgstr "Q.tà futura"
 
 #. module: stock
 #: code:addons/stock/models/product.py:325
@@ -3221,7 +3221,7 @@ msgstr "Gestisci differenti stock proprietari"
 #. module: stock
 #: model:res.groups,name:stock.group_production_lot
 msgid "Manage Lots / Serial Numbers"
-msgstr "Gestisci Lotti / Numeri di serie"
+msgstr "Gestire lotti / numeri di serie"
 
 #. module: stock
 #: model:res.groups,name:stock.group_stock_multi_locations
@@ -3288,7 +3288,7 @@ msgstr "Operazione di produzione"
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
 msgid "Mark as Todo"
-msgstr "Segna come da fare"
+msgstr "Segna da fare"
 
 #. module: stock
 #: model:ir.ui.menu,name:stock.menu_stock_inventory_control
@@ -3864,7 +3864,7 @@ msgstr "Ubicazione di uscita"
 #: selection:stock.picking,activity_state:0
 #: selection:stock.production.lot,activity_state:0
 msgid "Overdue"
-msgstr "Scaduto"
+msgstr "In ritardo"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_overprocessed_transfer__overprocessed_product_name
@@ -4179,7 +4179,7 @@ msgstr "Pivot"
 #: selection:stock.picking,activity_state:0
 #: selection:stock.production.lot,activity_state:0
 msgid "Planned"
-msgstr "Pianificato"
+msgstr "Pianificata"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.stock_picking_type_kanban
@@ -5420,7 +5420,7 @@ msgstr "Mostrare Testo dei lotti"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_picking__show_mark_as_todo
 msgid "Show Mark As Todo"
-msgstr "Mostrare Aggiungere ai compiti da fare"
+msgstr "Mostra «Segna da fare»"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_picking__show_operations
@@ -7327,7 +7327,7 @@ msgstr "Devi prima impostare la quantità che metterai nella confezione. "
 #: code:addons/stock/models/stock_picking.py:712
 #, python-format
 msgid "You need to supply a Lot/Serial number for product %s."
-msgstr "Devi fornire un numero di lotto/di serie per il prodotto %s. "
+msgstr "È necessario indicare un numero di lotto/serie per il prodotto %s. "
 
 #. module: stock
 #: code:addons/stock/models/product.py:394
@@ -7425,3 +7425,9 @@ msgstr "Trattato al posto di"
 #: model_terms:ir.ui.view,arch_db:stock.view_inventory_form
 msgid "⇒ Set quantities to 0"
 msgstr "⇒ Imposta quantità a 0"
+
+#. module: stock
+#: code:addons/stock/models/stock_move_line.py:223
+#, python-format
+msgid "Changing the product is only allowed in 'Draft' state."
+msgstr ""

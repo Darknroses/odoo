@@ -11,8 +11,8 @@
 # Martin Trigaux, 2018
 # Link Up링크업 <linkup.way@gmail.com>, 2018
 # nle_odoo, 2018
-# Linkup <link-up@naver.com>, 2019
-# JH CHOI <hwangtog@gmail.com>, 2019
+# Linkup <link-up@naver.com>, 2020
+# JH CHOI <hwangtog@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
@@ -20,7 +20,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-14 07:33+0000\n"
 "PO-Revision-Date: 2018-08-24 09:25+0000\n"
-"Last-Translator: JH CHOI <hwangtog@gmail.com>, 2019\n"
+"Last-Translator: JH CHOI <hwangtog@gmail.com>, 2020\n"
 "Language-Team: Korean (https://www.transifex.com/odoo/teams/41243/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -48,6 +48,9 @@ msgid ""
 "\n"
 "Blocking: %s"
 msgstr ""
+"\n"
+"\n"
+"거부됨: %s"
 
 #. module: stock
 #: code:addons/stock/models/stock_move.py:329
@@ -194,6 +197,8 @@ msgid ""
 "<i class=\"fa fa-fw fa-caret-right\" role=\"img\" aria-label=\"Unfold\" "
 "title=\"Unfold\"/>"
 msgstr ""
+"<i class=\"fa fa-fw fa-caret-right\" role=\"img\" aria-label=\"Unfold\" "
+"title=\"Unfold\"/>"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_inventory_form
@@ -228,12 +233,12 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock.product_form_view_procurement_button
 #: model_terms:ir.ui.view,arch_db:stock.product_template_form_view_procurement_button
 msgid "<span class=\"o_stat_text\">On Hand</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">현재고</span>"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
 msgid "<span class=\"o_stat_text\">Operations</span>"
-msgstr ""
+msgstr "<span class=\"o_stat_text\">재고이동유형</span>"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.report_mrp_line
@@ -242,6 +247,9 @@ msgid ""
 "Report\" aria-label=\"Traceability Report\"><i class=\"fa fa-fw fa-level-up "
 "fa-rotate-270\"/></span>"
 msgstr ""
+"<span role=\"img\" class=\"o_stock_reports_stream\" title=\"Traceability "
+"Report\" aria-label=\"Traceability Report\"><i class=\"fa fa-fw fa-level-up "
+"fa-rotate-270\"/></span>"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.report_picking
@@ -2152,7 +2160,7 @@ msgstr "추적이 가능"
 #: model:ir.model.fields,field_description:stock.field_product_replenish__product_has_variants
 #: model:ir.model.fields,field_description:stock.field_stock_rules_report__product_has_variants
 msgid "Has variants"
-msgstr ""
+msgstr "변형함"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_location__posz
@@ -4225,7 +4233,7 @@ msgstr "상품 이동 (재고 이동 명세)"
 #: model:ir.ui.menu,name:stock.menu_product_packagings
 #: model_terms:ir.ui.view,arch_db:stock.res_config_settings_view_form
 msgid "Product Packagings"
-msgstr ""
+msgstr "상품 포장"
 
 #. module: stock
 #: model:ir.model,name:stock.model_product_replenish
@@ -4250,7 +4258,7 @@ msgstr "상품 양식"
 #: model:ir.model.fields,field_description:stock.field_product_replenish__product_tmpl_id
 #: model:ir.model.fields,field_description:stock.field_stock_rules_report__product_tmpl_id
 msgid "Product Tmpl"
-msgstr ""
+msgstr "상품 Tmpl"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_product_product__type
@@ -4738,7 +4746,7 @@ msgstr "재주문 규칙 검색"
 #: model_terms:ir.ui.view,arch_db:stock.product_product_view_form_easy_inherit_stock
 #: model_terms:ir.ui.view,arch_db:stock.product_template_form_view_procurement_button
 msgid "Replenish"
-msgstr ""
+msgstr "보충"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_product_replenish
@@ -7042,7 +7050,7 @@ msgstr "예. PO0032"
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.stock_warn_insufficient_qty_form_view
 msgid "in"
-msgstr ""
+msgstr "분류"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.stock_warn_insufficient_qty_form_view
@@ -7076,3 +7084,9 @@ msgstr ""
 #: model_terms:ir.ui.view,arch_db:stock.view_inventory_form
 msgid "⇒ Set quantities to 0"
 msgstr "⇒ 수량을 0으로 설정"
+
+#. module: stock
+#: code:addons/stock/models/stock_move_line.py:223
+#, python-format
+msgid "Changing the product is only allowed in 'Draft' state."
+msgstr ""

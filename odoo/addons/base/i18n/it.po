@@ -31,16 +31,16 @@
 # Fabio Genovese <ing.fabiogenovese@gmail.com>, 2019
 # Léonie Bouchat <lbo@odoo.com>, 2019
 # Luigia Cimmino Caserta <lcc@odoo.com>, 2019
-# Sergio Zanchetta <primes2h@gmail.com>, 2019
 # mymage <stefano.consolaro@mymage.it>, 2019
+# Sergio Zanchetta <primes2h@gmail.com>, 2020
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 12.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-14 08:02+0000\n"
+"POT-Creation-Date: 2019-12-10 14:44+0000\n"
 "PO-Revision-Date: 2018-08-24 09:14+0000\n"
-"Last-Translator: mymage <stefano.consolaro@mymage.it>, 2019\n"
+"Last-Translator: Sergio Zanchetta <primes2h@gmail.com>, 2020\n"
 "Language-Team: Italian (https://www.transifex.com/odoo/teams/41243/it/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -131,6 +131,93 @@ msgstr ""
 " - Le imposte ungheresi\n"
 " - L'elenco delle banche ungheresi\n"
 " "
+
+#. module: base
+#: model:ir.module.module,description:base.module_l10n_dk
+msgid ""
+"\n"
+"\n"
+"Localization Module for Denmark\n"
+"===============================\n"
+"\n"
+"This is the module to manage the **accounting chart for Denmark**. Cover both one-man business as well as I/S, IVS, ApS and A/S\n"
+"\n"
+"**Modulet opsætter:**\n"
+"\n"
+"- **Dansk kontoplan**\n"
+"\n"
+"- Dansk moms\n"
+"        - 25% moms\n"
+"        - Resturationsmoms 6,25%\n"
+"        - Omvendt betalingspligt\n"
+"        \n"
+"- Konteringsgrupper\n"
+"        - EU (Virksomhed)\n"
+"        - EU (Privat)\n"
+"        - 3.lande\n"
+"\n"
+"- Finans raporter\n"
+"        - Resulttopgørelse\n"
+"        - Balance\n"
+"        - Momsafregning\n"
+"            - Afregning\n"
+"            - Rubrik A, B og C\n"
+"\n"
+"- **Anglo-Saxon regnskabsmetode**\n"
+"\n"
+".\n"
+"\n"
+"Produkt setup:\n"
+"==============\n"
+"\n"
+"**Vare**\n"
+"\n"
+"**Salgsmoms:**      Salgmoms 25%\n"
+"\n"
+"**Salgskonto:**     1010 Salg af vare, m/moms\n"
+"\n"
+"**Købsmoms:**       Købsmoms 25%\n"
+"\n"
+"**Købskonto:**      2010 Direkte omkostninger vare, m/moms\n"
+"\n"
+".\n"
+"\n"
+"**Ydelse**\n"
+"\n"
+"**Salgsmoms:**      Salgmoms 25%, ydelser\n"
+"\n"
+"**Salgskonto:**     1011 Salg af ydelser, m/moms\n"
+"\n"
+"**Købsmoms:**       Købsmoms 25%, ydelser\n"
+"\n"
+"**Købskonto:**      2011 Direkte omkostninger ydelser, m/moms\n"
+"\n"
+".\n"
+"\n"
+"**Vare med omvendt betalingspligt**\n"
+"\n"
+"**Salgsmoms:**      Salg omvendt betalingspligt\n"
+"\n"
+"**Salgskonto:**     1012 Salg af vare, u/moms\n"
+"\n"
+"**Købsmoms:**       Køb omvendt betalingspligt\n"
+"\n"
+"**Købskonto:**      2012 Direkte omkostninger vare, u/moms\n"
+"\n"
+"\n"
+".\n"
+"\n"
+"**Restauration**\n"
+"\n"
+"**Købsmoms:**       Restaurationsmoms 6,25%, købsmoms\n"
+"\n"
+"**Købskonto:**      4010 Restaurationsbesøg\n"
+"\n"
+".\n"
+"\n"
+"Copyright 2018 Odoo House ApS\n"
+"    "
+msgstr ""
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_do
@@ -730,6 +817,15 @@ msgid ""
 msgstr ""
 "\n"
 "        Formattazione dell'indirizzo corretto quando entrambi i moduli sono installati"
+
+#. module: base
+#: model:ir.module.module,description:base.module_product_unspsc
+msgid ""
+"\n"
+"        Countries like Colombia, Peru and Mexico need to be able to use the \n"
+"        UNSPSC code for their products and uoms.  \n"
+"    "
+msgstr ""
 
 #. module: base
 #: model:ir.module.module,summary:base.module_l10n_mx_reports
@@ -1498,6 +1594,15 @@ msgstr ""
 "Rendiconti contabili per la Croazia\n"
 "================================\n"
 "    "
+
+#. module: base
+#: model:ir.module.module,description:base.module_l10n_dk_reports
+msgid ""
+"\n"
+"Accounting reports for Denmark\n"
+"=================================\n"
+"    "
+msgstr ""
 
 #. module: base
 #: model:ir.module.module,description:base.module_l10n_et_reports
@@ -5390,19 +5495,19 @@ msgstr ""
 "DA FARE\n"
 "\n"
 "vecchia descrizione:\n"
-"Fatturazione & Pagamenti con Voucher contabile & Ricevute\n"
-"=====================================================\n"
-"Il sistema di fatturazione specifico e facile da usare di Odoo ti consente di tenere traccia della tua contabilità, anche se non sei un revisore dei conti. Fornisce un modo semplice di seguire i tuoi fornitori e clienti. \n"
+"Fatturazione e pagamenti con ricevute contabili\n"
+"============================================\n"
+"Il sistema di fatturazione \"facile da usare\" specifico di Odoo consente di tenere traccia della contabilità anche senza essere un contabile. Fornisce un modo semplice per seguire i fornitori e i clienti. \n"
 "\n"
-"Questa contabilità semplificata può essere usata nel caso in cui lavori con un revisore dei conti (esterno) per gestire i tuoi libri contabili e vuoi tenere traccia dei pagamenti.\n"
+"Questa contabilità semplificata può essere usata nel caso in cui la gestione dei libri contabili venga effettuata esternamente, ma sia comunque necessario tenere traccia dei pagamenti.\n"
 "\n"
-"Il sistema di fatturazione comprende ricevute e voucher (un modo semplice di tenere traccia delle vendite e degli acquisti. Offre anche un metodo semplice per registrare i pagamenti, senza dover registrare completi estratti conto.\n"
+"Il sistema di fatturazione si basa sulle ricevute (un metodo semplificato per tenere traccia delle vendite e degli acquisti). Offre anche un modo semplice per registrare i pagamenti, senza la necessità di definire estratti conto completi.\n"
 "\n"
 "Questo modulo gestisce:\n"
 "\n"
-"* Registrazione di Voucher\n"
-"* Ricevuta di Voucher [Vendite & Acquisto]\n"
-"* Pagamento con Voucher [Cliente & Venditori]\n"
+"* Registrazioni\n"
+"* Ricevute [vendita e acquisto]\n"
+"* Pagamenti [clienti e fornitori]\n"
 "    "
 
 #. module: base
@@ -5558,6 +5663,9 @@ msgid ""
 "This is a base module. It holds website-related stuff for Contact model (res.partner).\n"
 "    "
 msgstr ""
+"\n"
+"Questo è un modulo base. Contiene materiale relativo al sito web per il modello \"Contatto\" (res.partner).\n"
+"    "
 
 #. module: base
 #: model:ir.module.module,description:base.module_website_payment
@@ -8821,7 +8929,7 @@ msgstr "Azioni"
 #: model_terms:ir.ui.view,arch_db:base.view_currency_search
 #: model_terms:ir.ui.view,arch_db:base.view_view_search
 msgid "Active"
-msgstr "Attiva"
+msgstr "Attivo"
 
 #. module: base
 #: selection:ir.actions.act_window.view,view_mode:0
@@ -10805,6 +10913,11 @@ msgid "Colombian Localization for EDI documents"
 msgstr "Localizzazione colombiana per documenti EDI"
 
 #. module: base
+#: model:ir.module.module,summary:base.module_l10n_co_edi_ubl_2_1
+msgid "Colombian Localization for EDI documents UBL 2.1"
+msgstr ""
+
+#. module: base
 #: model:ir.model.fields,field_description:base.field_res_groups__color
 #: model:ir.model.fields,field_description:base.field_res_partner__color
 #: model:ir.model.fields,field_description:base.field_res_partner_category__color
@@ -11047,7 +11160,7 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_res_config_settings
 msgid "Config Settings"
-msgstr "Impostazioni configurazione"
+msgstr "Impostazioni di configurazione"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.config_wizard_step_view_form
@@ -11336,12 +11449,12 @@ msgstr "Codice nazione"
 #: model_terms:ir.ui.view,arch_db:base.view_country_group_form
 #: model_terms:ir.ui.view,arch_db:base.view_country_group_tree
 msgid "Country Group"
-msgstr "Aree Geografiche"
+msgstr "Raggruppamento nazioni"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_country__country_group_ids
 msgid "Country Groups"
-msgstr "Gruppi di nazioni"
+msgstr "Raggruppamenti nazioni"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_res_country__name
@@ -12233,6 +12346,16 @@ msgid "Denmark"
 msgstr "Danimarca"
 
 #. module: base
+#: model:ir.module.module,shortdesc:base.module_l10n_dk
+msgid "Denmark - Accounting"
+msgstr ""
+
+#. module: base
+#: model:ir.module.module,shortdesc:base.module_l10n_dk_reports
+msgid "Denmark - Accounting Reports"
+msgstr ""
+
+#. module: base
 #: model:ir.model.fields,field_description:base.field_ir_model_fields__depends
 #: model:ir.model.fields,field_description:base.field_ir_module_module__dependencies_id
 #: model_terms:ir.ui.view,arch_db:base.module_form
@@ -12512,9 +12635,9 @@ msgid ""
 "Display and manage the list of all countries group. You can create or delete"
 " country group to make sure the ones you are working on will be maintained."
 msgstr ""
-"Mostra e gestisce l'elenco di tutti i gruppi di paesi. È possibile creare o "
-"cancellare un gruppo di paesi per assicurarti che quelli su cui stai "
-"lavorando verranno mantenuti."
+"Mostra e gestisce l'elenco di tutti i raggruppamenti nazioni. È possibile "
+"creare o eliminare un gruppo per garantire il mantenimento di quelli ai "
+"quali si sta lavorando."
 
 #. module: base
 #: model_terms:ir.actions.act_window,help:base.action_country
@@ -13070,8 +13193,13 @@ msgid "Electronic invoicing for Colombia with Carvajal"
 msgstr "Fatturazione elettronica per la Colombia con Carvajal"
 
 #. module: base
-#: code:addons/base/models/ir_ui_view.py:619
-#: code:addons/base/models/ir_ui_view.py:700
+#: model:ir.module.module,shortdesc:base.module_l10n_co_edi_ubl_2_1
+msgid "Electronic invoicing for Colombia with Carvajal UBL 2.1"
+msgstr ""
+
+#. module: base
+#: code:addons/base/models/ir_ui_view.py:629
+#: code:addons/base/models/ir_ui_view.py:720
 #, python-format
 msgid "Element '%s' cannot be located in parent view"
 msgstr "L'elemento '%s' non può esser localizzato nella vista genitore"
@@ -13986,7 +14114,19 @@ msgid "File Size"
 msgstr "Dimensione file"
 
 #. module: base
-#: code:addons/base/wizard/base_import_language.py:44
+#: code:addons/base/wizard/base_import_language.py:45
+#, python-format
+msgid ""
+"File not imported due to a malformed file.\n"
+"\n"
+"This issue can be caused by duplicates entries who are referring to the same field. Please check the content of the file you are trying to import.\n"
+"\n"
+"Technical Details:\n"
+"%s"
+msgstr ""
+
+#. module: base
+#: code:addons/base/wizard/base_import_language.py:51
 #, python-format
 msgid ""
 "File not imported due to format mismatch or a malformed file. (Valid formats are .csv, .po, .pot)\n"
@@ -14235,7 +14375,7 @@ msgstr "Formattare l'indirizzo email \"Nome <email@dominio>\""
 #: model:ir.model.fields,field_description:base.field_res_partner__email_formatted
 #: model:ir.model.fields,field_description:base.field_res_users__email_formatted
 msgid "Formatted Email"
-msgstr "Email formattato"
+msgstr "E-mail con formattazione"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_website_forum
@@ -16128,7 +16268,7 @@ msgstr ""
 #. module: base
 #: sql_constraint:ir.ui.view:0
 msgid "Invalid key: QWeb view should have a key"
-msgstr "Chiave non valida: la vista qweb dovrebbe avere una chiave"
+msgstr "Chiave non valida: la vista QWeb deve possedere una chiave"
 
 #. module: base
 #: code:addons/base/models/ir_actions.py:140
@@ -17442,8 +17582,7 @@ msgstr ""
 #: model:ir.module.module,summary:base.module_account_voucher
 msgid "Manage your debts and credits thanks to simple sale/purchase receipts"
 msgstr ""
-"Gestisci i tuoi debiti e i tuoi crediti grazie a semplici ricevute di "
-"vendita/acquisto"
+"Gestione debiti e crediti grazie a semplici ricevute di vendita/acquisto"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_hr_payroll
@@ -18057,7 +18196,7 @@ msgstr "Moduli"
 #: code:addons/base/models/ir_module.py:404
 #, python-format
 msgid "Modules \"%s\" and \"%s\" are incompatible."
-msgstr "I moduli \"%s\" e \"%s\" non sono compatibili."
+msgstr "I moduli «%s» e «%s» sono incompatibili."
 
 #. module: base
 #: model:res.country,name:base.md
@@ -20605,7 +20744,7 @@ msgstr "Applicazioni Aperte"
 #. module: base
 #: model:ir.actions.client,name:base.action_client_base_menu
 msgid "Open Settings Menu"
-msgstr "Apri menu impostazioni"
+msgstr "Apri menù impostazioni"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_window_action_tree
@@ -21144,7 +21283,7 @@ msgstr "Azienda madre"
 #: model:ir.model.fields,field_description:base.field_ir_ui_menu__parent_id
 #: model:ir.model.fields,field_description:base.field_wizard_ir_model_menu_create__menu_id
 msgid "Parent Menu"
-msgstr "Menù padre"
+msgstr "Menù superiore"
 
 #. module: base
 #: model:ir.model.fields,field_description:base.field_ir_ui_menu__parent_path
@@ -21530,7 +21669,7 @@ msgstr ""
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_model_relation__name
 msgid "PostgreSQL table name implementing a many2many relation."
-msgstr ""
+msgstr "Nome tabella PostgreSQL che implementa una relazione molti a molti."
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_predictive_bills
@@ -21996,12 +22135,12 @@ msgstr "Q ATTIVITÀ RELATIVE ALLA SALUTE UMANA E AL LAVORO SOCIALE"
 #: model_terms:ir.ui.view,arch_db:base.view_view_search
 #: selection:ir.ui.view,type:0
 msgid "QWeb"
-msgstr "Qweb"
+msgstr "QWeb"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.act_report_xml_view
 msgid "QWeb views"
-msgstr "Viste qweb"
+msgstr "Viste QWeb"
 
 #. module: base
 #: model:res.country,name:base.qa
@@ -22058,53 +22197,53 @@ msgstr "Azioni rapide per installazione nuove app, aggiunta utenti ecc."
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_quotation_builder
 msgid "Quotation Builder"
-msgstr "Costruttore di preventivi"
+msgstr "Creatore preventivi"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sale_expense
 #: model:ir.module.module,summary:base.module_sale_stock
 msgid "Quotation, Sales Orders, Delivery & Invoicing Control"
-msgstr "Preventivi, Ordini di Vendita, Consegne & Controllo delle Fatture"
+msgstr "Preventivi, ordini di vendita, consegne e controllo fatture"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb
 msgid "Qweb"
-msgstr "Qweb"
+msgstr "QWeb"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field
 msgid "Qweb Field"
-msgstr "Campo qweb"
+msgstr "Campo QWeb"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_barcode
 msgid "Qweb Field Barcode"
-msgstr "Campo Qweb Codice a Barre"
+msgstr "Campo QWeb codice a barre"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_contact
 msgid "Qweb Field Contact"
-msgstr "Campo qweb contatto"
+msgstr "Campo QWeb contatto"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_date
 msgid "Qweb Field Date"
-msgstr "Campo qweb data"
+msgstr "Campo QWeb data"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_datetime
 msgid "Qweb Field Datetime"
-msgstr "Campo qweb data e ora"
+msgstr "Campo QWeb data/ora"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_duration
 msgid "Qweb Field Duration"
-msgstr "Campo qweb durata"
+msgstr "Campo QWeb durata"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_float
 msgid "Qweb Field Float"
-msgstr "Campo qweb float"
+msgstr "Campo QWeb virgola mobile"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_float_time
@@ -22114,27 +22253,27 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_html
 msgid "Qweb Field HTML"
-msgstr "Campo qweb HTML"
+msgstr "Campo QWeb HTML"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_image
 msgid "Qweb Field Image"
-msgstr "Campo qweb immagine"
+msgstr "Campo QWeb immagine"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_integer
 msgid "Qweb Field Integer"
-msgstr "Campo qweb intero"
+msgstr "Campo QWeb intero"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_many2one
 msgid "Qweb Field Many to One"
-msgstr "Campo qweb molti a uno"
+msgstr "Campo QWeb molti a uno"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_monetary
 msgid "Qweb Field Monerary"
-msgstr "Campo qweb monetario"
+msgstr "Campo QWeb monetario"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_relative
@@ -22144,22 +22283,22 @@ msgstr ""
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_selection
 msgid "Qweb Field Selection"
-msgstr "Selezione campo qweb"
+msgstr "Campo QWeb selezione"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_text
 msgid "Qweb Field Text"
-msgstr "Campo qweb"
+msgstr "Campo QWeb testo"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_qweb
 msgid "Qweb Field qweb"
-msgstr "Campo qweb qweb"
+msgstr "Campo QWeb qweb"
 
 #. module: base
 #: model:ir.model,name:base.model_ir_qweb_field_many2many
 msgid "Qweb field many2many"
-msgstr "campo qweb molti a molti"
+msgstr "Campo QWeb molti a molti"
 
 #. module: base
 #: code:addons/base/models/ir_ui_view.py:362
@@ -22763,7 +22902,7 @@ msgstr "Configuratore di salario"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_account_voucher
 msgid "Sale & Purchase Vouchers"
-msgstr "Voucher di vendita e di acquisto"
+msgstr "Ricevute di vendita e acquisto"
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_sale_coupon
@@ -23121,7 +23260,7 @@ msgstr "Vendita di prodotti in rete"
 #. module: base
 #: selection:ir.actions.server,state:0
 msgid "Send Email"
-msgstr "Invio e-mail"
+msgstr "Invia e-mail"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_sign
@@ -23277,7 +23416,7 @@ msgstr "Imposta Password"
 #: model_terms:ir.ui.view,arch_db:base.config_wizard_step_view_form
 #: model_terms:ir.ui.view,arch_db:base.ir_actions_todo_tree
 msgid "Set as Todo"
-msgstr "Imposta come DaFare"
+msgstr "Imposta da fare"
 
 #. module: base
 #: model:ir.actions.act_window,name:base.action_open_base_onboarding_company
@@ -23481,7 +23620,7 @@ msgstr "Slovenia - Rendiconti contabili"
 #: model:ir.model.fields,field_description:base.field_res_partner__image_small
 #: model:ir.model.fields,field_description:base.field_res_users__image_small
 msgid "Small-sized image"
-msgstr "Immagine (formato piccolo)"
+msgstr "Immagine di piccola dimensione"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_res_partner__image_small
@@ -23840,6 +23979,11 @@ msgstr ""
 #: model:ir.module.module,shortdesc:base.module_web_studio
 msgid "Studio"
 msgstr "Studio"
+
+#. module: base
+#: model:ir.module.module,shortdesc:base.module_studio_customization
+msgid "Studio customizations"
+msgstr ""
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.edit_menu_access
@@ -25486,6 +25630,13 @@ msgstr ""
 "eseguito correttamente sia sull'ordine che sulla consegna."
 
 #. module: base
+#: model:ir.module.module,description:base.module_studio_customization
+msgid ""
+"This module has been generated by Odoo Studio.\n"
+"It contains the apps created with Studio and the customizations of existing apps."
+msgstr ""
+
+#. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_base_module_upgrade
 msgid "This module will trigger the uninstallation of below modules."
 msgstr "Questo modulo causerà la disinstallazione dei seguenti moduli:"
@@ -25933,6 +26084,14 @@ msgid ""
 "- 'Add Followers': add followers to a record (Discuss)\n"
 "- 'Create Next Activity': create an activity (Discuss)"
 msgstr ""
+"Tipologia azione server. Sono disponibili i seguenti valori:\n"
+"- \"Esegui codice Python\": esegue un blocco di codice Python\n"
+"- \"Crea\": crea un nuovo record con nuovi valori\n"
+"- \"Aggiorna record\": aggiorna i valori di un record\n"
+"- \"Esegui alcune azioni\": definisce un'azione che attiva diverse altre azioni server\n"
+"- \"Invia e-mail\": invia una e-mail in modo automatico (Comunicazioni)\n"
+"- \"Aggiungi follower\": aggiunge follower a un record (Comunicazioni)\n"
+"- \"Crea prossima attività\": crea un'attività (Comunicazioni)"
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_model_constraint__type
@@ -25973,6 +26132,12 @@ msgstr "Regno unito - Rendiconti contabili"
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_l10n_uk_reports_hmrc
 msgid "UK - Accounting Reports to HMRC"
+msgstr ""
+
+#. module: base
+#: model:ir.module.module,shortdesc:base.module_product_unspsc
+#: model:ir.module.module,summary:base.module_product_unspsc
+msgid "UNSPSC product codes"
 msgstr ""
 
 #. module: base
@@ -26141,9 +26306,11 @@ msgid "Units of measure"
 msgstr "Unità di misura"
 
 #. module: base
+#: code:addons/model.py:143 code:addons/model.py:152 code:addons/model.py:153
 #: model:ir.model,name:base.model__unknown
 #: selection:ir.module.module.dependency,state:0
 #: selection:ir.module.module.exclusion,state:0
+#, python-format
 msgid "Unknown"
 msgstr "Sconosciuto"
 
@@ -26259,7 +26426,7 @@ msgstr "Aggiornamento traduzioni"
 #. module: base
 #: selection:ir.actions.server,state:0
 msgid "Update the Record"
-msgstr "Aggiornare il record"
+msgstr "Aggiorna record"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_company_report_form
@@ -27047,7 +27214,7 @@ msgid ""
 "sequence. Low number means high priority."
 msgstr ""
 "Per le azioni multiple, l'ordine di esecuzione è basato sulla sequenza. Un "
-"numero piccolo indica la massima priorità."
+"numero piccolo indica alta priorità."
 
 #. module: base
 #: model:ir.model.fields,help:base.field_ir_mail_server__sequence
@@ -27743,6 +27910,11 @@ msgid "selection"
 msgstr "selezione"
 
 #. module: base
+#: selection:ir.model.fields,ttype:0
+msgid "serialized"
+msgstr "serializzato"
+
+#. module: base
 #: model:ir.module.module,shortdesc:base.module_snailmail_account
 msgid "snailmail_account"
 msgstr "snailmail_account"
@@ -27751,11 +27923,6 @@ msgstr "snailmail_account"
 #: model:ir.module.module,shortdesc:base.module_social_media
 msgid "social_media"
 msgstr "social_media"
-
-#. module: base
-#: model:ir.module.category,name:base.module_category_stock
-msgid "stock"
-msgstr ""
 
 #. module: base
 #: model:ir.module.module,shortdesc:base.module_stock_zebra
