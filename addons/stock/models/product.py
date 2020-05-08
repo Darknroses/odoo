@@ -367,7 +367,7 @@ class Product(models.Model):
         return res
 
     def action_update_quantity_on_hand(self):
-        return self.product_tmpl_id.with_context({'default_product_id': self.id}).action_update_quantity_on_hand()
+        return self.product_tmpl_id.with_context(default_product_id=self.id).action_update_quantity_on_hand()
 
     def action_view_routes(self):
         return self.mapped('product_tmpl_id').action_view_routes()
@@ -422,6 +422,10 @@ class Product(models.Model):
                     msg += '- %s \n' % product.display_name
                 raise UserError(msg)
         return res
+
+    def _is_phantom_bom(self):
+        self.ensure_one()
+        return False
 
 class ProductTemplate(models.Model):
     _inherit = 'product.template'
