@@ -573,7 +573,10 @@ class AccountJournal(models.Model):
             # A bank account can belong to a customer/supplier, in which case their partner_id is the customer/supplier.
             # Or they are part of a bank journal and their partner_id must be the company's partner_id.
             if self.bank_account_id.partner_id != self.company_id.partner_id:
-                raise ValidationError(_('The holder of a journal\'s bank account must be the company (%s).') % self.company_id.name)
+                raise ValidationError(_('The holder of the bank account of a "Bank" type journal must be the company (%s).\n'
+                                        'However, the holder of "%s" is "%s".\n'
+                                        'Please select another bank account or change the holder of "%s".'
+                                        ) % (self.company_id.name, self.bank_account_id.acc_number, self.bank_account_id.partner_id.name, self.bank_account_id.acc_number))
 
     @api.onchange('default_debit_account_id')
     def onchange_debit_account_id(self):
@@ -969,7 +972,9 @@ class AccountTax(models.Model):
     @api.multi
     @api.returns('self', lambda value: value.id)
     def copy(self, default=None):
-        default = dict(default or {}, name=_("%s (Copy)") % self.name)
+        default = dict(default or {})
+        if 'name' not in default:
+            default['name'] = _("%s (Copy)") % self.name
         return super(AccountTax, self).copy(default=default)
 
     def name_get(self):

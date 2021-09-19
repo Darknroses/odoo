@@ -9,7 +9,7 @@
 # Seongseok Shin <shinss61@hotmail.com>, 2018
 # nle_odoo, 2018
 # Linkup <link-up@naver.com>, 2019
-# JH CHOI <hwangtog@gmail.com>, 2020
+# JH CHOI <hwangtog@gmail.com>, 2021
 # 
 msgid ""
 msgstr ""
@@ -17,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-11-14 07:34+0000\n"
 "PO-Revision-Date: 2018-08-24 09:20+0000\n"
-"Last-Translator: JH CHOI <hwangtog@gmail.com>, 2020\n"
+"Last-Translator: JH CHOI <hwangtog@gmail.com>, 2021\n"
 "Language-Team: Korean (https://www.transifex.com/odoo/teams/41243/ko/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1056,6 +1056,12 @@ msgid "Call"
 msgstr "전화"
 
 #. module: mail
+#: code:addons/mail/models/mail_notification.py:57
+#, python-format
+msgid "Can not update the message or recipient of a notification."
+msgstr "메시지 또는 통지 수신인을 업데이트할 수 없습니다."
+
+#. module: mail
 #. openerp-web
 #: code:addons/mail/static/src/js/followers.js:365
 #: code:addons/mail/static/src/xml/activity.xml:86
@@ -1784,6 +1790,13 @@ msgstr "문서명"
 
 #. module: mail
 #. openerp-web
+#: code:addons/mail/static/src/xml/thread.xml:524
+#, python-format
+msgid "Document not downloadable"
+msgstr "다운로드 할 수 없는 문서"
+
+#. module: mail
+#. openerp-web
 #: code:addons/mail/static/src/xml/activity.xml:101
 #, python-format
 msgid "Done"
@@ -2268,6 +2281,12 @@ msgstr "팔로워 전용"
 #, python-format
 msgid "Following"
 msgstr "팔로잉"
+
+#. module: mail
+#: code:addons/mail/models/mail_channel.py:778
+#, python-format
+msgid "Following invites are invalid as user groups do not match: %s"
+msgstr "사용자 그룹이 일치하지 않으므로 다음 초대가 잘못되었습니다 : %s"
 
 #. module: mail
 #: model:ir.model.fields,help:mail.field_mail_activity__icon
@@ -2767,12 +2786,6 @@ msgid "Is Read"
 msgstr "읽기 전용 여부"
 
 #. module: mail
-#: code:addons/mail/models/mail_notification.py:0
-#, python-format
-msgid "Can not update the message or recipient of a notification."
-msgstr ""
-
-#. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_channel__is_subscribed
 msgid "Is Subscribed"
 msgstr "구독 여부"
@@ -3192,6 +3205,13 @@ msgstr "할 일로 표시"
 #, python-format
 msgid "Mark as done"
 msgstr "완료로 표시"
+
+#. module: mail
+#. openerp-web
+#: code:addons/mail/static/src/xml/thread.xml:300
+#, python-format
+msgid "Mark as todo"
+msgstr "할 일로 표시"
 
 #. module: mail
 #: model:ir.ui.menu,name:mail.mail_blacklist_menu
@@ -3955,6 +3975,18 @@ msgstr "팔로워 1명"
 #, python-format
 msgid "Online"
 msgstr "온라인"
+
+#. module: mail
+#: code:addons/mail/models/mail_message.py:1052
+#, python-format
+msgid "Only administrators are allowed to export mail message"
+msgstr "관리자만 메일 메시지를 내보낼 수 있습니다."
+
+#. module: mail
+#: code:addons/mail/models/mail_message.py:1043
+#, python-format
+msgid "Only administrators are allowed to use grouped read on message model"
+msgstr "관리자만 메시지 모델에서 그룹화된 읽기를 사용할 수 있습니다"
 
 #. module: mail
 #: code:addons/mail/models/mail_channel.py:436
@@ -4865,6 +4897,13 @@ msgstr "메시지 보내기"
 
 #. module: mail
 #. openerp-web
+#: code:addons/mail/static/src/xml/discuss.xml:141
+#, python-format
+msgid "Send by mail"
+msgstr "메일로 보내기"
+
+#. module: mail
+#. openerp-web
 #: code:addons/mail/static/src/js/discuss.js:145
 #, python-format
 msgid "Send explanation to author"
@@ -5247,7 +5286,7 @@ msgstr ""
 #: code:addons/mail/models/mail_channel.py:0
 #, python-format
 msgid "The partner can not join this channel"
-msgstr ""
+msgstr "파트너가 이 채널에 가입할 수 없습니다."
 
 #. module: mail
 #: code:addons/mail/models/mail_activity.py:243
@@ -5682,6 +5721,29 @@ msgstr "사용자 필드 이름"
 
 #. module: mail
 #. openerp-web
+#: code:addons/mail/static/src/xml/discuss.xml:157
+#: code:addons/mail/static/src/xml/discuss.xml:278
+#, python-format
+msgid "User is idle"
+msgstr "사용자가 유휴 상태입니다"
+
+#. module: mail
+#. openerp-web
+#: code:addons/mail/static/src/xml/discuss.xml:158
+#, python-format
+msgid "User is offline"
+msgstr "사용자가 오프라인 상태입니다"
+
+#. module: mail
+#. openerp-web
+#: code:addons/mail/static/src/xml/discuss.xml:156
+#: code:addons/mail/static/src/xml/discuss.xml:277
+#, python-format
+msgid "User is online"
+msgstr "사용자 온라인"
+
+#. module: mail
+#. openerp-web
 #: code:addons/mail/static/src/xml/discuss.xml:62
 #: code:addons/mail/static/src/xml/thread_window.xml:11
 #, python-format
@@ -5919,6 +5981,13 @@ msgstr "<b>#%s</b> 채널에 있습니다."
 
 #. module: mail
 #. openerp-web
+#: code:addons/mail/static/src/js/attachment_box.js:132
+#, python-format
+msgid "You are not allowed to upload an attachment here."
+msgstr "여기에 첨부 파일을 업로드할 수 없습니다."
+
+#. module: mail
+#. openerp-web
 #: code:addons/mail/static/src/js/discuss.js:338
 #, python-format
 msgid ""
@@ -5938,19 +6007,19 @@ msgstr "어떤 메시지도 '별표'를 표시할 수 있으며, 이 편지함�
 #: cod:addons/mail/models/mail_channel.py:0
 #, python-format
 msgid "You can not remove this partner from this channel"
-msgstr ""
+msgstr "이 채널에서 이 파트너를 제거할 수 없습니다."
 
 #. module: mail
 #: code:addons/mail/models/mail_channel.py:0
 #, python-format
 msgid "You can not write on the record of other users"
-msgstr ""
+msgstr "다른 사용자의 레코드에 쓸 수 없습니다."
 
 #. module: mail
 #: code:addons/mail/models/mail_channel.py:0
 #, python-format
 msgid "You can not write on this field"
-msgstr ""
+msgstr "이 필드에는 쓸 수 없습니다."
 
 #. module: mail
 #: code:addons/mail/models/res_users.py:87
@@ -6002,7 +6071,7 @@ msgstr "다음에 할당되었습니다"
 #: code:addons/mail/static/src/js/services/mail_notification_manager.js:198
 #, python-format
 msgid "You have been invited to: %s"
-msgstr ""
+msgstr "초대받은 대상은 다음과 같습니다 : %s"
 
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.mail_channel_notify_moderation

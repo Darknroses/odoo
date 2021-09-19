@@ -12,6 +12,8 @@
 # Hamid Darabi, 2019
 # Hamid Reza Kaveh <hamidrkp@riseup.net>, 2019
 # Hamed Mohammadi <hamed@dehongi.com>, 2020
+# Mohsen Mohammadi <iammohsen.123@gmail.com>, 2021
+# Far Har <fhari1234@gmail.com>, 2021
 # 
 msgid ""
 msgstr ""
@@ -19,7 +21,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-04-12 12:19+0000\n"
 "PO-Revision-Date: 2018-08-24 09:18+0000\n"
-"Last-Translator: Hamed Mohammadi <hamed@dehongi.com>, 2020\n"
+"Last-Translator: Far Har <fhari1234@gmail.com>, 2021\n"
 "Language-Team: Persian (https://www.transifex.com/odoo/teams/41243/fa/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -195,12 +197,12 @@ msgstr "وضعیت فعالیت"
 #: model_terms:ir.actions.act_window,help:hr.act_employee_from_department
 #: model_terms:ir.actions.act_window,help:hr.open_view_employee_list_my
 msgid "Add a new employee"
-msgstr ""
+msgstr "افزودن یک کارمند جدید"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__additional_note
 msgid "Additional Note"
-msgstr ""
+msgstr "یادداشت اضافی"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_crm_team__alias_contact
@@ -231,7 +233,7 @@ msgstr "تعداد پیوست"
 #. module: hr
 #: selection:mail.alias,alias_contact:0
 msgid "Authenticated Employees"
-msgstr ""
+msgstr "کارکنان تاییدشده"
 
 #. module: hr
 #: selection:mail.alias,alias_contact:0
@@ -241,17 +243,17 @@ msgstr ""
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.mail_channel_view_form_
 msgid "Auto Subscribe Departments"
-msgstr ""
+msgstr "دپارتمان‌های اشتراک خودکار"
 
 #. module: hr
 #: model:ir.model.fields,help:hr.field_mail_channel__subscription_department_ids
 msgid "Automatically subscribe members of those departments to the channel."
-msgstr ""
+msgstr "به طور خودکار اعضای آن دپارتمان‌ها را در کانال مشترک میکند."
 
 #. module: hr
 #: selection:hr.employee,certificate:0
 msgid "Bachelor"
-msgstr ""
+msgstr "کارشناسی"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__bank_account_id
@@ -295,7 +297,7 @@ msgstr "تولد"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__certificate
 msgid "Certificate Level"
-msgstr ""
+msgstr "سطح گواهی‌نامه"
 
 #. module: hr
 #: model:hr.job,name:hr.job_ceo
@@ -400,12 +402,12 @@ msgstr "مشارکت در پروژه‌های اوپن‌سورس"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__country_of_birth
 msgid "Country of Birth"
-msgstr ""
+msgstr "کشور محل تولد"
 
 #. module: hr
 #: model_terms:ir.actions.act_window,help:hr.open_module_tree_department
 msgid "Create a new department"
-msgstr ""
+msgstr "ایجاد یک دپارتمان جدید"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_department__create_uid
@@ -443,7 +445,7 @@ msgstr "تعریف یک استراتژی ارتباطی مشخص"
 #. module: hr
 #: model:ir.model.fields,help:hr.field_hr_employee__resource_calendar_id
 msgid "Define the schedule of resource"
-msgstr ""
+msgstr "تعریف برنامه زمان‌بندی منابع"
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_consultant
@@ -507,12 +509,12 @@ msgstr ""
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__emergency_contact
 msgid "Emergency Contact"
-msgstr ""
+msgstr "تماس اضطراری"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__emergency_phone
 msgid "Emergency Phone"
-msgstr ""
+msgstr "تلفن اضطراری"
 
 #. module: hr
 #: model:ir.model,name:hr.model_hr_employee
@@ -615,7 +617,7 @@ msgstr "زن"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__study_field
 msgid "Field of Study"
-msgstr ""
+msgstr "رشته تحصیلی"
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_consultant
@@ -712,7 +714,7 @@ msgstr "دپارتمان منابع انسانی"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_mail_channel__subscription_department_ids
 msgid "HR Departments"
-msgstr ""
+msgstr "دپارتمان‌های منابع انسانی"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form
@@ -803,7 +805,7 @@ msgstr ""
 #: code:addons/hr/models/hr.py:296
 #, python-format
 msgid "Import Template for Employees"
-msgstr ""
+msgstr "درونش قالب برای کارمندان"
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_ceo
@@ -931,12 +933,12 @@ msgstr "راه‌اندازی محصولات جدید، کمپین‌های با
 #. module: hr
 #: selection:hr.employee,marital:0
 msgid "Legal Cohabitant"
-msgstr ""
+msgstr "همزبان حقوقی"
 
 #. module: hr
 #: model_terms:ir.actions.act_window,help:hr.action_hr_job
 msgid "Let's create a job position."
-msgstr ""
+msgstr "بیایید یک موقعیت شغلی ایجاد کنیم."
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_department__message_main_attachment_id
@@ -976,7 +978,7 @@ msgstr "متاهل"
 #. module: hr
 #: selection:hr.employee,certificate:0
 msgid "Master"
-msgstr ""
+msgstr "کارشناسی ارشد"
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_cto
@@ -1232,6 +1234,10 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
+"سیاست ارسال پیام بر روی مدرک با استفاده از mailgateway.\n"
+"- همه: همه می توانند پست بگذارند\n"
+"- شرکا: فقط همکاران معتبر\n"
+"- پیروان: فقط پیروان سند مربوطه یا اعضای کانال‌های زیر\n"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form
@@ -1268,7 +1274,7 @@ msgstr "یادگیرنده‌ی سریع و مستقل"
 #. module: hr
 #: model_terms:ir.actions.act_window,help:hr.action_hr_job
 msgid "Ready to recruit more efficiently?"
-msgstr ""
+msgstr "آماده استخدام کارآمدتر هستید؟"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_hr_job_form
@@ -1293,7 +1299,7 @@ msgstr "کارمندان مرتبط"
 #. module: hr
 #: model:ir.model.fields,help:hr.field_hr_employee__user_id
 msgid "Related user name for the resource to manage its access."
-msgstr ""
+msgstr "نام کاربری مرتبط برای منبع برای مدیریت حق دسترسی آن."
 
 #. module: hr
 #: model:ir.ui.menu,name:hr.menu_hr_reporting_timesheet
@@ -1346,7 +1352,7 @@ msgstr "مقیاس رویدادهای سازمان ما در سراسر دنیا
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__study_school
 msgid "School"
-msgstr ""
+msgstr "مدرسه"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.res_config_settings_view_form
@@ -1359,7 +1365,7 @@ msgstr ""
 #: model:ir.model.fields,help:hr.field_hr_job__state
 msgid ""
 "Set whether the recruitment process is open or closed for this job position."
-msgstr ""
+msgstr "تعیین کنید که آیا روند استخدام برای این موقعیت شغلی باز یا بسته است."
 
 #. module: hr
 #: model:ir.actions.act_window,name:hr.hr_config_settings_action
@@ -1425,17 +1431,17 @@ msgstr "شماره ملی"
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__spouse_birthdate
 msgid "Spouse Birthdate"
-msgstr ""
+msgstr "تاریخ تولد همسر"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__spouse_complete_name
 msgid "Spouse Complete Name"
-msgstr ""
+msgstr "نام کامل همسر"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_hr_job_form
 msgid "Start Recruitment"
-msgstr ""
+msgstr "شروع استخدام"
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_job__state
@@ -1452,6 +1458,10 @@ msgid ""
 "Today: Activity date is today\n"
 "Planned: Future activities."
 msgstr ""
+"وضعیت بر اساس فعالیت\n"
+"Overdue: Due date is already passed\n"
+"امروز:تاریخ فعالیت امروز است\n"
+"برنامه‌ریزی شده: برنامه‌های آینده."
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_hr_job_form
@@ -1501,7 +1511,7 @@ msgstr "نام موقعیت شغلی باید در هر بخش در شرکت ی�
 #. module: hr
 #: model:res.groups,comment:hr.group_hr_user
 msgid "The user will be able to approve document created by employees."
-msgstr ""
+msgstr "کاربر قادر خواهد بود مدرک ایجاد شده توسط کارکنان را تصویب کند."
 
 #. module: hr
 #: model:res.groups,comment:hr.group_hr_manager
@@ -1509,6 +1519,7 @@ msgid ""
 "The user will have access to the human resources configuration as well as "
 "statistic reports."
 msgstr ""
+"کاربر به پیکربندی منابع انسانی و همچنین گزارش های آماری دسترسی خواهد داشت."
 
 #. module: hr
 #: model:ir.model.fields,help:hr.field_hr_employee__image
@@ -1523,6 +1534,8 @@ msgid ""
 "This field is used in order to define in which timezone the resources will "
 "work."
 msgstr ""
+"از این فیلد به منظور تعریف اینکه منابع در کدام منطقه زمانی کار خواهند کرد "
+"استفاده می شود."
 
 #. module: hr
 #: model:ir.model.fields,field_description:hr.field_hr_employee__tz
@@ -1694,6 +1707,8 @@ msgid ""
 "                can easily find all the information you need for each person;\n"
 "                contact data, job position, availability, etc."
 msgstr ""
+"تنها با یک نگاه سریع بر روی صفحه نمایش کارمند Odoo، شما به راحتی می‌توانید تمام اطلاعات مورد نیاز خود را برای هر فرد پیدا کنید؛\n"
+"         اطلاعات مخاطب موقعیت شغلی، در دسترس بودن و غیره."
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_ceo
@@ -1825,7 +1840,7 @@ msgstr ""
 #: code:addons/hr/models/hr.py:331
 #, python-format
 msgid "You cannot create recursive departments."
-msgstr ""
+msgstr "شما نمی توانید دپارتمان‌های بازگشتی (تو در تو) ایجاد کنید."
 
 #. module: hr
 #: model_terms:hr.job,website_description:hr.job_consultant
