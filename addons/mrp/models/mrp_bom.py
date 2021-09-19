@@ -222,8 +222,8 @@ class MrpBomLine(models.Model):
         return self.env['uom.uom'].search([], limit=1, order='id').id
 
     product_id = fields.Many2one(
-        'product.product', 'Component', required=True)
-    product_tmpl_id = fields.Many2one('product.template', 'Product Template', related='product_id.product_tmpl_id')
+        'product.product', 'Component', required=False)
+    product_tmpl_id = fields.Many2one('product.template', 'Product Template', related='product_id.product_tmpl_id', readonly=False)
     product_qty = fields.Float(
         'Quantity', default=1.0,
         digits=dp.get_precision('Product Unit of Measure'), required=True)
