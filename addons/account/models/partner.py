@@ -315,7 +315,7 @@ class ResPartner(models.Model):
         domain = [
             ('reconciled', '=', False),
             ('account_id.deprecated', '=', False),
-            ('account_id.internal_type', '=', 'receivable'),
+            '|', ('account_id.internal_type', '=', 'receivable'), ('account_id.internal_type', '=', 'payable'),
             '|', ('debit', '!=', 0), ('credit', '!=', 0),
             ('company_id', '=', self.env.user.company_id.id),
             ('move_id.state', '=', 'posted'),
