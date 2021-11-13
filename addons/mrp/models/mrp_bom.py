@@ -230,7 +230,7 @@ class MrpBomLine(models.Model):
     product_uom_id = fields.Many2one(
         'uom.uom', 'Product Unit of Measure',
         default=_get_default_product_uom_id,
-        oldname='product_uom', required=True,
+        oldname='product_uom', required=False,
         help="Unit of Measure (Unit of Measure) is the unit of measurement for the inventory control")
     sequence = fields.Integer(
         'Sequence', default=1,
