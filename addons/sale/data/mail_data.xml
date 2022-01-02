@@ -54,9 +54,10 @@
             <field name="relation_field">team_id</field>
         </record>
     </data>
-    <!-- Template and notification section
-     TODO: DG will be removed as it's part of nv_base
+    <!-- Template and notification section -->
+
     <data noupdate="1">
+        <!--  TODO: DG will be removed as it's part of nv_base
         <template id="mail_notification_paynow_online" inherit_id="mail.mail_notification_paynow" name="oezirhgoi">
             <xpath expr="//t[@t-set='access_name']" position="after">
                 <t t-if="record._name == 'sale.order'">
