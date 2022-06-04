@@ -164,10 +164,11 @@ var db = {
         fields: {
             id: {string: "ID", type: 'integer'},
             display_name: {string: "Displayed name", type: 'char'},
+            type: {string: "Type", type: 'char'},
             company_id: {string: "Company", type: 'many2one', relation: 'res.company'},
         },
         records: [
-            {id: 8, display_name: "company 1 journal", company_id: 1}
+            {id: 8, display_name: "company 1 journal", type:'general', company_id: 1}
         ]
     },
     'account.analytic.account': {
@@ -703,7 +704,13 @@ QUnit.module('account', {
                         position: "before",
                         symbol: "$"
                     }
-                }
+                },
+                user_has_group: function (group) {
+                    if (group === 'analytic.group_analytic_tags' || group === 'analytic.group_analytic_accounting') {
+                        return $.when(true);
+                    }
+                    return this._super.apply(this, arguments);
+                },
             },
             archs: {
                 'account.bank.statement.line,false,search': '<search string="Statement Line"><field name="display_name"/></search>',
@@ -1949,7 +1956,7 @@ QUnit.module('account', {
                     assert.deepEqual(
                         _.pick(args.args[0][0].new_mv_line_dicts[1 - idx],
                                'account_id', 'name', 'credit', 'debit', 'tax_repartition_line_id'),
-                        {account_id: 287, name: "Tax 20.00%", credit: 0, debit: 36, tax_repartition_line_id: 2},
+                        {account_id: 287, name: "dummy text Tax 20.00%", credit: 0, debit: 36, tax_repartition_line_id: 2},
                         "Reconciliation rpc payload, new_mv_line_dicts.tax is correct"
                     );
                 }
@@ -2014,7 +2021,7 @@ QUnit.module('account', {
             "Tax line account number is valid");
         assert.equal($($newLineTaxeTds[1]).text().trim(), "New",
             "Tax line is flagged as new");
-        assert.equal($($newLineTaxeTds[2]).text().trim(), "Tax 20.00%",
+        assert.equal($($newLineTaxeTds[2]).text().trim(), "dummy text Tax 20.00%",
             "Tax line has the correct label");
         assert.equal($($newLineTaxeTds[3]).text().trim(), "36.00",
             "Tax line has the correct left amount");
@@ -2022,7 +2029,7 @@ QUnit.module('account', {
             "Tax line has the correct right amount");
 
         // Reconcile
-        await testUtils.dom.click(widget.$("button.o_reconcile.btn.btn-primary:first"));
+        await testUtils.dom.click(widget.$("button.o_validate.btn.btn-secondary:first"));
         assert.ok(true, "No error in reconciliation");
 
         clientAction.destroy();
@@ -2118,7 +2125,13 @@ QUnit.module('account', {
                         position: "before",
                         symbol: "$"
                     }
-                }
+                },
+                user_has_group: function (group) {
+                    if (group === 'analytic.group_analytic_tags' || group === 'analytic.group_analytic_accounting') {
+                        return $.when(true);
+                    }
+                    return this._super.apply(this, arguments);
+                },
             },
             archs: {
                 'account.bank.statement.line,false,search': '<search string="Statement Line"><field name="display_name"/></search>',

@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import hashlib
-import json
 import logging
 import os
 import re
@@ -16,7 +14,7 @@ except ImportError:
     slugify_lib = None
 
 import odoo
-from odoo import api, models, registry, exceptions
+from odoo import api, models, registry, exceptions, http
 from odoo.addons.base.models.ir_http import RequestUID, ModelConverter
 from odoo.addons.base.models.qweb import QWebException
 from odoo.http import request
@@ -150,7 +148,7 @@ def url_lang(path_or_uri, lang_code=None):
         location = werkzeug.urls.url_join(request.httprequest.path, location)
         lang_url_codes = [url_code for _, url_code, _ in Lang.get_available()]
         lang_code = pycompat.to_text(lang_code or request.context['lang'])
-        lang_url_code = Lang._lang_get(lang_code).url_code
+        lang_url_code = Lang._lang_code_to_urlcode(lang_code)
         lang_url_code = lang_url_code if lang_url_code in lang_url_codes else lang_code
 
         if (len(lang_url_codes) > 1 or force_lang) and is_multilang_url(location, lang_url_codes):
@@ -189,8 +187,7 @@ def url_for(url_from, lang_code=None, no_rewrite=False):
     # avoid useless check for 1 char URL '/', '#', ... and absolute URL
     if not no_rewrite and url_from and (len(url_from) > 1 or not url_from.startswith('http')):
         path, _, qs = url_from.partition('?')
-        req = request.httprequest
-        router = req.app.get_db_router(request.db).bind('')
+        router = http.root.get_db_router(request.db).bind('')
         try:
             _ = router.match(path, method='POST')
         except werkzeug.exceptions.MethodNotAllowed as e:
@@ -226,7 +223,7 @@ def is_multilang_url(local_url, lang_url_codes=None):
     url = local_url.partition('#')[0].split('?')
     path = url[0]
     query_string = url[1] if len(url) > 1 else None
-    router = request.httprequest.app.get_db_router(request.db).bind('')
+    router = http.root.get_db_router(request.db).bind('')
 
     def is_multilang_func(func):
         return (func and func.routing.get('website', False) and
@@ -300,18 +297,12 @@ class IrHttp(models.AbstractModel):
         modules = IrHttpModel.get_translation_frontend_modules()
         user_context = request.session.get_context() if request.session.uid else {}
         lang = user_context.get('lang')
-        translations, lang_params = request.env['ir.translation'].get_translations_for_webclient(modules, lang)
-        translation_cache = {
-            'lang_parameters': lang_params,
-            'modules': translations,
-            'multi_lang': len(request.env['res.lang'].sudo().get_installed()) > 1,
-            'lang': lang,
-        }
+        translation_hash = request.env['ir.translation'].get_web_translations_hash(modules, lang)
 
         session_info.update({
             'translationURL': '/website/translations',
             'cache_hashes': {
-                'translations': hashlib.sha1(json.dumps(translation_cache, sort_keys=True).encode()).hexdigest(),
+                'translations': translation_hash,
             },
         })
         return session_info
@@ -319,17 +310,28 @@ class IrHttp(models.AbstractModel):
     @api.model
     def get_translation_frontend_modules(self):
         Modules = request.env['ir.module.module'].sudo()
-        domain = self._get_translation_frontend_modules_domain()
-        return Modules.search(
-            expression.AND([domain, [('state', '=', 'installed')]])
-        ).mapped('name')
+        extra_modules_domain = self._get_translation_frontend_modules_domain()
+        extra_modules_name = self._get_translation_frontend_modules_name()
+        if extra_modules_domain:
+            new = Modules.search(
+                expression.AND([extra_modules_domain, [('state', '=', 'installed')]])
+            ).mapped('name')
+            extra_modules_name += new
+        return extra_modules_name
 
     @classmethod
     def _get_translation_frontend_modules_domain(cls):
         """ Return a domain to list the domain adding web-translations and
             dynamic resources that may be used frontend views
         """
-        return [('name', '=', 'web')]
+        return []
+
+    @classmethod
+    def _get_translation_frontend_modules_name(cls):
+        """ Return a list of module name where web-translations and
+            dynamic resources may be used in frontend views
+        """
+        return ['web']
 
     bots = "bot|crawl|slurp|spider|curl|wget|facebookexternalhit".split("|")
 
@@ -400,7 +402,7 @@ class IrHttp(models.AbstractModel):
             if nearest_lang:
                 lang = Lang._lang_get(nearest_lang)
             else:
-                nearest_ctx_lg = not is_a_bot and cls.get_nearest_lang(request.env.context['lang'])
+                nearest_ctx_lg = not is_a_bot and cls.get_nearest_lang(request.env.context.get('lang'))
                 nearest_ctx_lg = nearest_ctx_lg in lang_codes and nearest_ctx_lg
                 preferred_lang = Lang._lang_get(cook_lang or nearest_ctx_lg)
                 lang = preferred_lang or cls._get_default_lang()
@@ -584,7 +586,7 @@ class IrHttp(models.AbstractModel):
             code = exception.code
 
         values.update(
-            status_message=werkzeug.http.HTTP_STATUS_CODES[code],
+            status_message=werkzeug.http.HTTP_STATUS_CODES.get(code,''),
             status_code=code,
         )
 
@@ -627,6 +629,21 @@ class IrHttp(models.AbstractModel):
 
         if not request.uid:
             cls._auth_method_public()
+
+        # We rollback the current transaction before initializing a new
+        # cursor to avoid potential deadlocks.
+
+        # If the current (failed) transaction was holding a lock, the new
+        # cursor might have to wait for this lock to be released further
+        # down the line. However, this will only happen after the
+        # request is done (and in fact it won't happen). As a result, the
+        # current thread/worker is frozen until its timeout is reached.
+
+        # So rolling back the transaction will release any potential lock
+        # and, since we are in a case where an exception was raised, the
+        # transaction shouldn't be committed in the first place.
+        request.env.cr.rollback()
+
         with registry(request.env.cr.dbname).cursor() as cr:
             env = api.Environment(cr, request.uid, request.env.context)
             if code == 500:

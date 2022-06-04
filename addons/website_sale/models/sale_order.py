@@ -110,6 +110,11 @@ class SaleOrder(models.Model):
             # 'sale.order.line'.
             price, rule_id = order.pricelist_id.with_context(product_context).get_product_price_rule(product, qty or 1.0, order.partner_id)
             pu, currency = request.env['sale.order.line'].with_context(product_context)._get_real_price_currency(product, rule_id, qty, product.uom_id, order.pricelist_id.id)
+            if order.pricelist_id and order.partner_id:
+                order_line = order._cart_find_product_line(product.id)
+                if order_line:
+                    price = self.env['account.tax']._fix_tax_included_price_company(price, product.taxes_id, order_line[0].tax_id, self.company_id)
+                    pu = self.env['account.tax']._fix_tax_included_price_company(pu, product.taxes_id, order_line[0].tax_id, self.company_id)
             if pu != 0:
                 if order.pricelist_id.currency_id != currency:
                     # we need new_list_price in the same currency as price, which is in the SO's pricelist's currency
@@ -121,6 +126,10 @@ class SaleOrder(models.Model):
                     # but we still want to use the price defined on the pricelist
                     discount = 0
                     pu = price
+            else:
+                # In case the price_unit equal 0 and therefore not able to calculate the discount,
+                # we fallback on the price defined on the pricelist.
+                pu = price
         else:
             pu = product.price
             if order.pricelist_id and order.partner_id:
@@ -128,7 +137,7 @@ class SaleOrder(models.Model):
                 if order_line:
                     pu = self.env['account.tax']._fix_tax_included_price_company(pu, product.taxes_id, order_line[0].tax_id, self.company_id)
 
-        return {
+        res = {
             'product_id': product_id,
             'product_uom_qty': qty,
             'order_id': order_id,
@@ -136,6 +145,10 @@ class SaleOrder(models.Model):
             'price_unit': pu,
             'discount': discount,
         }
+        if hasattr(self.env['sale.order.line'], '_compute_margin'):
+            # In case sale_margin is installed:
+            res['purchase_price'] = self.env['sale.order.line']._compute_margin(order, product, product.uom_id)
+        return res
 
     def _cart_update(self, product_id=None, line_id=None, add_qty=0, set_qty=0, **kwargs):
         """ Add or set product quantity, add_qty can be negative """
@@ -145,16 +158,19 @@ class SaleOrder(models.Model):
         SaleOrderLineSudo = self.env['sale.order.line'].sudo().with_context(product_context)
         # change lang to get correct name of attributes/values
         product_with_context = self.env['product.product'].with_context(product_context)
-        product = product_with_context.browse(int(product_id))
+        product = product_with_context.browse(int(product_id)).exists()
+
+        if not product or (not line_id and not product._is_add_to_cart_allowed()):
+            raise UserError(_("The given product does not exist therefore it cannot be added to cart."))
 
         try:
             if add_qty:
-                add_qty = float(add_qty)
+                add_qty = int(add_qty)
         except ValueError:
             add_qty = 1
         try:
             if set_qty:
-                set_qty = float(set_qty)
+                set_qty = int(set_qty)
         except ValueError:
             set_qty = 0
         quantity = 0
@@ -167,9 +183,6 @@ class SaleOrder(models.Model):
 
         # Create line if no line with product_id can be located
         if not order_line:
-            if not product:
-                raise UserError(_("The given product does not exist therefore it cannot be added to cart."))
-
             no_variant_attribute_values = kwargs.get('no_variant_attribute_values') or []
             received_no_variant_values = product.env['product.template.attribute.value'].browse([int(ptav['value']) for ptav in no_variant_attribute_values])
             received_combination = product.product_template_attribute_value_ids | received_no_variant_values
@@ -255,14 +268,8 @@ class SaleOrder(models.Model):
                     'pricelist': order.pricelist_id.id,
                     'force_company': order.company_id.id,
                 })
-                product_with_context = self.env['product.product'].with_context(product_context)
-                product = product_with_context.browse(product_id)
-                values['price_unit'] = self.env['account.tax']._fix_tax_included_price_company(
-                    order_line._get_display_price(product),
-                    order_line.product_id.taxes_id,
-                    order_line.tax_id,
-                    self.company_id
-                )
+            product_with_context = self.env['product.product'].with_context(product_context)
+            product = product_with_context.browse(product_id)
 
             order_line.write(values)
 
@@ -295,7 +302,8 @@ class SaleOrder(models.Model):
                 accessory_products |= line.product_id.accessory_product_ids.filtered(lambda product:
                     product.website_published and
                     product not in products and
-                    product._is_variant_possible(parent_combination=combination)
+                    product._is_variant_possible(parent_combination=combination) and
+                    (product.company_id == line.company_id or not product.company_id)
                 )
 
             return random.sample(accessory_products, len(accessory_products))
@@ -349,6 +357,13 @@ class SaleOrder(models.Model):
                 template.send_mail(order.id)
                 sent_orders |= order
         sent_orders.write({'cart_recovery_email_sent': True})
+
+    def action_confirm(self):
+        res = super(SaleOrder, self).action_confirm()
+        for order in self:
+            if not order.transaction_ids and not order.amount_total and self._context.get('send_email'):
+                order._send_order_confirmation_mail()
+        return res
 
 
 class SaleOrderLine(models.Model):

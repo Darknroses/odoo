@@ -604,3 +604,105 @@ class TestUnbuild(TestMrpCommon):
         self.assertEqual(StockQuant._get_available_quantity(finshed_product, self.stock_location), 0, 'Table should not be available in stock')
         self.assertEqual(StockQuant._get_available_quantity(component1, self.stock_location), 1, 'Table head should be available in stock as the picking is transferred')
         self.assertEqual(StockQuant._get_available_quantity(component2, self.stock_location), 1, 'Table stand should be available in stock as the picking is transferred')
+
+    def test_unbuild_an_updated_mo(self):
+        """ Suppose the user has a MO with qty = 1. On Produce step, he increases the quantity to 3.
+        Then the user unbuilds one product"""
+        mo, bom, p_final, p1, p2 = self.generate_mo(qty_final=1, qty_base_1=1, qty_base_2=1)
+        self.env['stock.quant']._update_available_quantity(p1, self.stock_location, 3)
+        self.env['stock.quant']._update_available_quantity(p2, self.stock_location, 3)
+        mo.action_assign()
+
+        produce_form = Form(self.env['mrp.product.produce'].with_context({
+            'active_id': mo.id,
+            'active_ids': [mo.id],
+        }))
+        produce_form.qty_producing = 3
+        produce_wizard = produce_form.save()
+        produce_wizard.do_produce()
+
+        mo.button_mark_done()
+
+        ub_form = Form(self.env['mrp.unbuild'])
+        ub_form.mo_id = mo
+        self.assertEqual(ub_form.product_qty, 3)
+        ub_form.product_qty = 1
+        ub = ub_form.save()
+        ub.action_unbuild()
+
+        for p, qty in [(p1, 1), (p2, 1), (p_final, 2)]:
+            self.assertEqual(p.qty_available, qty, 'Inorrect qty for product %s' % p.name)
+            ub_sm = self.env['stock.move'].search([('product_id', '=', p.id), ('name', 'like', 'UB%')])
+            self.assertEqual(len(ub_sm), 1, 'Incorrect nb of SM for product %s' % p.name)
+            self.assertEqual(ub_sm.product_uom_qty, 1, 'Incorrect qty for prodcut %s' % p.name)
+
+    def test_unbuild_decimal_qty(self):
+        """
+        Use case:
+        - decimal accuracy of Product UoM > decimal accuracy of Units
+        - unbuild a product with a decimal quantity of component
+        """
+        self.env['decimal.precision'].search([('name', '=', 'Product Unit of Measure')]).digits = 4
+        self.uom_unit.rounding = 0.001
+
+        self.bom_1.product_qty = 3
+        self.bom_1.bom_line_ids.product_qty = 5
+        self.env['stock.quant']._update_available_quantity(self.product_2, self.stock_location, 3)
+
+        mo_form = Form(self.env['mrp.production'])
+        mo_form.product_id = self.bom_1.product_id
+        mo_form.bom_id = self.bom_1
+        mo = mo_form.save()
+        mo.action_confirm()
+        mo.action_assign()
+        produce_form = Form(self.env['mrp.product.produce'].with_context({
+            'active_id': mo.id,
+            'active_ids': [mo.id],
+        }))
+        produce_form.qty_producing = 3
+        produce_wizard = produce_form.save()
+        produce_wizard.do_produce()
+        mo.button_mark_done()
+
+        uo_form = Form(self.env['mrp.unbuild'])
+        uo_form.mo_id = mo
+        # Unbuilding one product means a decimal quantity equal to 1 / 3 * 5 for each component
+        uo_form.product_qty = 1
+        uo = uo_form.save()
+        uo.action_unbuild()
+        self.assertEqual(uo.state, 'done')
+
+    def test_unbuild_from_partially_done_mo(self):
+        """
+        Have a MO, produce a partial qty, post the inventory and then cancel the
+        MO (it will mark the MO as done). Then, unbuild some finished products
+        from this MO
+        """
+        self.env['stock.quant']._update_available_quantity(self.product_2, self.stock_location, 20)
+
+        mo, _bom, p_final, p1, p2 = self.generate_mo(qty_final=10, qty_base_1=1, qty_base_2=1)
+
+        produce_form = Form(self.env['mrp.product.produce'].with_context({
+            'active_id': mo.id,
+            'active_ids': [mo.id],
+        }))
+        produce_form.qty_producing = 8
+        produce_wizard = produce_form.save()
+        produce_wizard.do_produce()
+
+        mo.post_inventory()
+        mo.action_cancel()
+        self.assertEqual(mo.state, 'done')
+
+        uo_form = Form(self.env['mrp.unbuild'])
+        uo_form.mo_id = mo
+        uo_form.product_qty = 2
+        uo = uo_form.save()
+        uo.action_unbuild()
+
+        self.assertEqual(uo.state, 'done')
+        self.assertRecordValues(uo.produce_line_ids, [
+            {'product_id': p_final.id, 'quantity_done': 2.0},
+            {'product_id': p2.id, 'quantity_done': 2.0},
+            {'product_id': p1.id, 'quantity_done': 2.0},
+        ])

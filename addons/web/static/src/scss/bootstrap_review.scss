@@ -89,3 +89,12 @@
 .popover {
     right: auto#{"/*rtl:ignore*/"};
 }
+
+// Restore height to prevent flex to be ignored
+.input-group .form-control {
+    height: initial;
+}
+
+.carousel-control-next .sr-only {
+    left: 50%; // Avoid horizontal scrollbar in Chrome
+}
