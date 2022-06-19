@@ -247,7 +247,10 @@ class Cursor(object):
         now = time.time()
         try:
             params = params or None
-            res = self._obj.execute(query, params)
+            if 'DELETE FROM account_account_tag WHERE id IN' not in query:
+                res = self._obj.execute(query, params)
+            else:
+                res = None
         except Exception as e:
             if self._default_log_exceptions if log_exceptions is None else log_exceptions:
                 _logger.error("bad query: %s\nERROR: %s", tools.ustr(self._obj.query or query), e)
