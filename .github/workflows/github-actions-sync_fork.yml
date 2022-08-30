@@ -7,11 +7,10 @@ on:
 
 jobs:
   sync:
-
     runs-on: ubuntu-latest
-
     steps:
-      - uses: tgymnich/fork-sync@v1.4
+      - name: Sync fork
+        uses: tgymnich/fork-sync@v1.4
         with:
           token: ${{ secrets.MY_TOKEN || github.token }}
           owner: Darknroses
