@@ -7367,7 +7367,7 @@ msgstr "Aktualizuj ilość"
 #: model_terms:ir.ui.view,arch_db:stock.product_template_form_view_procurement_button
 #, python-format
 msgid "Update Quantity"
-msgstr ""
+msgstr "Zaktualizuj Ilość"
 
 #. module: stock
 #: model:ir.model.fields.selection,name:stock.selection__stock_move__priority__1
@@ -7461,7 +7461,7 @@ msgstr "Widok"
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_template_property_form
 msgid "View Diagram"
-msgstr ""
+msgstr "Zobacz schemat"
 
 #. module: stock
 #. openerp-web
