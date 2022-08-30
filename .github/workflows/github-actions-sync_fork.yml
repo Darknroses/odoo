@@ -13,6 +13,7 @@ jobs:
     steps:
       - uses: tgymnich/fork-sync@v1.4
         with:
+          token: ${{ secrets.MY_TOKEN || github.token }}
           owner: Darknroses
           base: 14.0
           head: 14.0
