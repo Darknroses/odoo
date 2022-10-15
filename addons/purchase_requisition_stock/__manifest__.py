@@ -8,7 +8,7 @@
     'sequence': 70,
     'summary': '',
     'description': "",
-    'depends': ['purchase_requisition', 'purchase_stock'],
+    'depends': ['purchase_requisition_16', 'purchase_stock'],
     'demo': [
         'data/purchase_requisition_stock_demo.xml'
         ],
