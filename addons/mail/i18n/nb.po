@@ -2905,7 +2905,7 @@ msgstr "Bilde"
 #. module: mail
 #: model_terms:ir.ui.view,arch_db:mail.view_document_file_kanban
 msgid "Image is a link"
-msgstr ""
+msgstr "Bilde er en link"
 
 #. module: mail
 #: code:addons/mail/models/mail_alias.py:0
@@ -3910,7 +3910,7 @@ msgstr "Måneder"
 #: model:ir.model.fields,field_description:mail.field_res_partner__my_activity_date_deadline
 #: model:ir.model.fields,field_description:mail.field_res_users__my_activity_date_deadline
 msgid "My Activity Deadline"
-msgstr ""
+msgstr "MIn aktivitets tidsfrist"
 
 #. module: mail
 #: model:ir.model.fields,field_description:mail.field_mail_activity_type__name
