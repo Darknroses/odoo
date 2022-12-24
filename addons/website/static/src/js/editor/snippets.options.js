@@ -867,7 +867,16 @@ options.registry.BackgroundShape.include({
             return el;
         }
         return _getLastPreFilterLayerElement(this.$target);
-    }
+    },
+    /**
+     * @override
+     */
+    _removeShapeEl(shapeEl) {
+        this.trigger_up('widgets_stop_request', {
+            $target: $(shapeEl),
+        });
+        return this._super(...arguments);
+    },
 });
 
 options.registry.BackgroundVideo = options.Class.extend({
@@ -1469,10 +1478,17 @@ options.registry.CarouselItem = options.Class.extend({
         const $items = this.$carousel.find('.carousel-item');
         const newLength = $items.length - 1;
         if (!this.removing && newLength > 0) {
-            const $toDelete = $items.filter('.active');
+            // The active indicator is deleted to ensure that the other
+            // indicators will still work after the deletion.
+            const $toDelete = $items.filter('.active').add(this.$indicators.find('.active'));
             this.$carousel.one('active_slide_targeted.carousel_item_option', () => {
                 $toDelete.remove();
-                this.$indicators.find('li:last').remove();
+                // To ensure the proper functioning of the indicators, their
+                // attributes must reflect the position of the slides.
+                const indicatorsEls = this.$indicators[0].querySelectorAll('li');
+                for (let i = 0; i < indicatorsEls.length; i++) {
+                    indicatorsEls[i].setAttribute('data-slide-to', i);
+                }
                 this.$controls.toggleClass('d-none', newLength === 1);
                 this.$carousel.trigger('content_changed');
                 this.removing = false;
@@ -1533,24 +1549,35 @@ options.registry.sizing_x = options.registry.sizing.extend({
      * @override
      */
     _onResize: function (compass, beginClass, current) {
-        if (compass === 'w') {
-            // don't change the right border position when we change the offset (replace col size)
-            var beginCol = Number(beginClass.match(/col-lg-([0-9]+)|$/)[1] || 0);
-            var beginOffset = Number(beginClass.match(/offset-lg-([0-9-]+)|$/)[1] || beginClass.match(/offset-xl-([0-9-]+)|$/)[1] || 0);
-            var offset = Number(this.grid.w[0][current].match(/offset-lg-([0-9-]+)|$/)[1] || 0);
-            if (offset < 0) {
-                offset = 0;
-            }
-            var colSize = beginCol - (offset - beginOffset);
-            if (colSize <= 0) {
-                colSize = 1;
-                offset = beginOffset + beginCol - 1;
-            }
-            this.$target.attr('class', this.$target.attr('class').replace(/\s*(offset-xl-|offset-lg-|col-lg-)([0-9-]+)/g, ''));
+        if (compass === 'w' || compass === 'e') {
+            const beginOffset = Number(beginClass.match(/offset-lg-([0-9-]+)|$/)[1] || beginClass.match(/offset-xl-([0-9-]+)|$/)[1] || 0);
 
-            this.$target.addClass('col-lg-' + (colSize > 12 ? 12 : colSize));
-            if (offset > 0) {
-                this.$target.addClass('offset-lg-' + offset);
+            if (compass === 'w') {
+                // don't change the right border position when we change the offset (replace col size)
+                var beginCol = Number(beginClass.match(/col-lg-([0-9]+)|$/)[1] || 0);
+                var offset = Number(this.grid.w[0][current].match(/offset-lg-([0-9-]+)|$/)[1] || 0);
+                if (offset < 0) {
+                    offset = 0;
+                }
+                var colSize = beginCol - (offset - beginOffset);
+                if (colSize <= 0) {
+                    colSize = 1;
+                    offset = beginOffset + beginCol - 1;
+                }
+                this.$target.attr('class', this.$target.attr('class').replace(/\s*(offset-xl-|offset-lg-|col-lg-)([0-9-]+)/g, ''));
+
+                this.$target.addClass('col-lg-' + (colSize > 12 ? 12 : colSize));
+                if (offset > 0) {
+                    this.$target.addClass('offset-lg-' + offset);
+                }
+            } else if (beginOffset > 0) {
+                const endCol = Number(this.grid.e[0][current].match(/col-lg-([0-9]+)|$/)[1] || 0);
+                // Avoids overflowing the grid to the right if the
+                // column size + the offset exceeds 12.
+                if ((endCol + beginOffset) > 12) {
+                    this.$target[0].className = this.$target[0].className.replace(/\s*(col-lg-)([0-9-]+)/g, '');
+                    this.$target[0].classList.add('col-lg-' + (12 - beginOffset));
+                }
             }
         }
         this._super.apply(this, arguments);
@@ -1932,8 +1959,20 @@ const VisibilityPageOptionUpdate = options.Class.extend({
      */
     async start() {
         await this._super(...arguments);
-        const shown = await this._isShown();
-        this.trigger_up('snippet_option_visibility_update', {show: shown});
+        // When entering edit mode via the URL (enable_editor) the WebsiteNavbar
+        // is not yet ReadyForActions because it is waiting for its
+        // sub-component EditPageMenu to start edit mode. Then invisible blocks
+        // options start (so this option too). But for isShown() to work, the
+        // navbar must be ReadyForActions. This is the reason why we can't wait
+        // for isShown here, otherwise we would have a deadlock. On one hand the
+        // navbar waiting for the invisible snippets options to be started to be
+        // ReadyForActions and on the other hand this option which needs the
+        // navbar to be ReadyForActions to be started.
+        // TODO in master: Use the data-invisible system to get rid of this
+        // piece of code.
+        this._isShown().then(isShown => {
+            this.trigger_up('snippet_option_visibility_update', {show: isShown});
+        });
     },
     /**
      * @override
