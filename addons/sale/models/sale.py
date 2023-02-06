@@ -997,6 +997,12 @@ Reason(s) of this behavior could be:
                             res[group]['amount'] += t['amount']
                             res[group]['base'] += t['base']
             res = sorted(res.items(), key=lambda l: l[0].sequence)
+
+            # round amount and prevent -0.00
+            for group_data in res:
+                group_data[1]['amount'] = currency.round(group_data[1]['amount']) + 0.0
+                group_data[1]['base'] = currency.round(group_data[1]['base']) + 0.0
+
             order.amount_by_group = [(
                 l[0].name, l[1]['amount'], l[1]['base'],
                 fmt(l[1]['amount']), fmt(l[1]['base']),
@@ -1215,8 +1221,6 @@ class SaleOrderLine(models.Model):
                 'price_total': taxes['total_included'],
                 'price_subtotal': taxes['total_excluded'],
             })
-            if self.env.context.get('import_file', False) and not self.env.user.user_has_groups('account.group_account_manager'):
-                line.tax_id.invalidate_cache(['invoice_repartition_line_ids'], [line.tax_id.id])
 
     @api.depends('product_id', 'order_id.state', 'qty_invoiced', 'qty_delivered')
     def _compute_product_updatable(self):
