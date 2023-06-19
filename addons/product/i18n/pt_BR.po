@@ -210,9 +210,9 @@ msgid ""
 " This description will be copied to every Sales Order, Delivery Order and "
 "Customer Invoice/Credit Note"
 msgstr ""
-"Uma descrição do produto que você deseja que apareça aos seus clientes. Esta"
-" descrição será copiada para todas os pedidos de vendas, ordens de entrega e"
-" faturas."
+"Uma descrição do produto que você deseja exibir para os seus clientes. Esta "
+"descrição será copiada para todos os pedidos de venda, pedidos de entrega e "
+"faturas de cliente/notas de crédito."
 
 #. module: product
 #: model_terms:ir.actions.act_window,help:product.product_pricelist_action2
@@ -435,7 +435,7 @@ msgstr "Disponibilidade"
 #: model_terms:ir.ui.view,arch_db:product.report_simple_barcode
 #: model_terms:ir.ui.view,arch_db:product.report_simple_label
 msgid "Barcode"
-msgstr "Código de barras"
+msgstr "Código de Barras"
 
 #. module: product
 #: model:ir.model.fields,help:product.field_product_packaging__barcode
