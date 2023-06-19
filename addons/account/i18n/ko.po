@@ -10,6 +10,7 @@
 # JH CHOI <hwangtog@gmail.com>, 2021
 # Linkup <link-up@naver.com>, 2021
 # Martin Trigaux, 2022
+# Daye Jeong, 2023
 # Sarah Park, 2023
 # 
 msgid ""
@@ -2564,7 +2565,7 @@ msgstr "예금거래 명세서"
 #: code:addons/account/models/chart_template.py:0
 #, python-format
 msgid "Bank Suspense Account"
-msgstr "거래 중지된 은행 계좌"
+msgstr "은행 가계정"
 
 #. module: account
 #: model:ir.model.fields,help:account.field_account_setup_bank_manual_config__acc_type
@@ -7769,7 +7770,7 @@ msgstr "환급세 잔액"
 #: model:ir.model.fields.selection,name:account.selection__account_bank_statement__state__open
 #: model_terms:ir.ui.view,arch_db:account.view_bank_statement_search
 msgid "New"
-msgstr "새로운"
+msgstr "신규"
 
 #. module: account
 #: model:ir.model.fields,field_description:account.field_account_setup_bank_manual_config__new_journal_name
@@ -8989,7 +8990,7 @@ msgstr ""
 msgid ""
 "Please go on the %s journal and define a Loss Account. This account will be "
 "used to record cash difference."
-msgstr ""
+msgstr "%s 전표로 이동하여 손실 계정을 설정하십시오. 이 계정은 현금 차액을 기록하는데 사용합니다."
 
 #. module: account
 #: code:addons/account/models/account_bank_statement.py:0
@@ -8997,7 +8998,7 @@ msgstr ""
 msgid ""
 "Please go on the %s journal and define a Profit Account. This account will "
 "be used to record cash difference."
-msgstr ""
+msgstr "%s 전표로 이동하여 수익 계정을 설정하십시오. 이 계정은 현금 차액을 기록하는데 사용합니다."
 
 #. module: account
 #: code:addons/account/models/company.py:0
@@ -9218,7 +9219,7 @@ msgstr "공급업체에 지불할 전표 인쇄"
 #: model:ir.model.fields.selection,name:account.selection__account_bank_statement__state__posted
 #: model_terms:ir.ui.view,arch_db:account.view_bank_statement_search
 msgid "Processing"
-msgstr ""
+msgstr "처리 중"
 
 #. module: account
 #: model:ir.model,name:account.model_product_product
