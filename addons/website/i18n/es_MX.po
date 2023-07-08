@@ -5155,7 +5155,7 @@ msgstr "Mercado"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_image_gallery_options
 msgid "Masonry"
-msgstr "Masonry"
+msgstr "Cuadros"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.s_media_list
@@ -7338,7 +7338,7 @@ msgstr "La URL completa para acceder al documento a través del sitio web."
 #: model:ir.model.fields,help:website.field_ir_cron__website_url
 msgid "The full URL to access the server action through the website."
 msgstr ""
-"El URL completo para acceder a la acción de servidor a través del sitio web."
+"La URL completa para acceder a la acción de servidor a través del sitio web."
 
 #. module: website
 #. openerp-web
@@ -9315,7 +9315,7 @@ msgstr "enlace"
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippets
 msgid "masonry, grid"
-msgstr "masonry, tabla"
+msgstr "cuadros, tabla"
 
 #. module: website
 #: model_terms:ir.ui.view,arch_db:website.snippets
