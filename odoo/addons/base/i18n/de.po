@@ -9248,6 +9248,7 @@ msgstr ""
 msgid ""
 "<code>UserError</code>: Warning Exception to use with <code>raise</code>"
 msgstr ""
+"<code>UserError</code>: Warnungsausnahme zu verwenden mit <code>raise</code>"
 
 #. module: base
 #: model_terms:ir.ui.view,arch_db:base.view_model_fields_form
@@ -18722,7 +18723,7 @@ msgstr "Fehlerhafter 'group by'-Parameter"
 #: code:addons/base/models/ir_default.py:0
 #, python-format
 msgid "Invalid JSON format in Default Value field."
-msgstr ""
+msgstr "Ungültiges JSON-Format im Standardwertfeld."
 
 #. module: base
 #: code:addons/models.py:0
@@ -31044,6 +31045,12 @@ msgstr ""
 "sind."
 
 #. module: base
+#: code:addons/base/models/ir_config_parameter.py:0
+#, python-format
+msgid "You cannot delete the %s record."
+msgstr ""
+
+#. module: base
 #: code:addons/base/models/res_lang.py:0
 #, python-format
 msgid ""
@@ -31066,6 +31073,12 @@ msgstr ""
 msgid "You cannot merge a contact with one of his parent."
 msgstr ""
 "Sie können ein Ansprechpartner nicht mit dessen Unternehmen zusammenfassen."
+
+#. module: base
+#: code:addons/base/models/ir_config_parameter.py:0
+#, python-format
+msgid "You cannot rename config parameters with keys %s"
+msgstr ""
 
 #. module: base
 #: code:addons/models.py:0
