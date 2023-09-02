@@ -27,7 +27,7 @@
 # Fernanda Marques <fem@odoo.com>, 2020
 # André Carvalho <and2carvalho@gmail.com>, 2020
 # Martin Trigaux, 2020
-# grazziano <gra.negocia@gmail.com>, 2020
+# grazziano <grazziano.do+transifex@gmail.com>, 2020
 # Lucas Rabelo <lucas.rabelo@nextsolucoes.net.br>, 2020
 # Éder Brito <britoederr@gmail.com>, 2021
 # Layna Nascimento, 2023
@@ -1178,7 +1178,7 @@ msgstr "Atividades Futuras"
 #: model:ir.model.fields,field_description:hr.field_hr_employee__gender
 #: model:ir.model.fields,field_description:hr.field_res_users__gender
 msgid "Gender"
-msgstr "Sexo"
+msgstr "Gênero"
 
 #. module: hr
 #: model_terms:ir.ui.view,arch_db:hr.view_employee_form
@@ -2027,9 +2027,9 @@ msgid ""
 "- partners: only authenticated partners\n"
 "- followers: only followers of the related document or members of following channels\n"
 msgstr ""
-"Política para enviar uma mensagem sobre o documento usando o MailGateway.\n"
-"- Todos: Qualquer um pode escrever\n"
-"- Parceiros: somente parceiros autenticados\n"
+"Política para publicar uma mensagem no documento usando o MailGateway.\n"
+"- Todos: qualquer um pode escrever\n"
+"- Usuários: somente usuários autenticados\n"
 "- Seguidores: apenas seguidores do documento relacionado ou membros dos seguintes canais\n"
 
 #. module: hr
