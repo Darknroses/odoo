@@ -167,6 +167,100 @@ msgid ""
 "</table>\n"
 "            "
 msgstr ""
+"<?xml version=\"1.0\"?>\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" style=\"padding-top: 16px; background-color: #F1F1F1; font-family:Verdana, Arial,sans-serif; color: #454748; width: 100%; border-collapse:separate;\"><tr><td align=\"center\">\n"
+"<table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"padding: 16px; background-color: white; color: #454748; border-collapse:separate;\">\n"
+"<tbody>\n"
+"    <!-- HEADER -->\n"
+"    <tr>\n"
+"        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                <tr><td valign=\"middle\">\n"
+"                    % set company = object.company_id or object.user_id.company_id or user.company_id\n"
+"                    <span style=\"font-size: 10px;\">你的購物車</span><br/>\n"
+"                    <span style=\"font-size: 20px; font-weight: bold;\">\n"
+"                        ${object.name}\n"
+"                    </span>\n"
+"                </td><td valign=\"middle\" align=\"right\">\n"
+"                    <img src=\"/logo.png?company=${company.id}\" style=\"padding: 0px; margin: 0px; height: auto; width: 80px;\" alt=\"${company.name}\"/>\n"
+"                </td></tr>\n"
+"                <tr><td colspan=\"2\" style=\"text-align:center;\">\n"
+"                  <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin:16px 0px 16px 0px;\"/>\n"
+"                </td></tr>\n"
+"            </table>\n"
+"        </td>\n"
+"    </tr>\n"
+"    <!-- CONTENT -->\n"
+"    <tr>\n"
+"        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                <tr><td valign=\"top\" style=\"font-size: 13px;\">\n"
+"                    <h1 style=\"color:#A9A9A9;\">喂，你的購物車仍有貨品！</h1>\n"
+"                    你想完成這次購物嗎？<br/><br/>\n"
+"                    % if object.order_line:\n"
+"                        % for line in object.website_order_line:\n"
+"                            <hr/>\n"
+"                            <table width=\"100%\">\n"
+"                                <tr>\n"
+"                                    <td style=\"padding: 10px; width:150px;\">\n"
+"                                        <img src=\"/web/image/product.product/${line.product_id.id}/image_128\" style=\"width: 100px; height: 100px; object-fit: contain;\" alt=\"產品圖片\"/>\n"
+"                                    </td>\n"
+"                                    <td>\n"
+"                                        <strong>${line.product_id.display_name}</strong><br/>${line.name}\n"
+"                                    </td>\n"
+"                                    <td width=\"100px\" align=\"right\">\n"
+"                                        ${(line.product_uom_qty) | int} ${(line.product_uom.name)}\n"
+"                                    </td>\n"
+"                                </tr>\n"
+"                            </table>\n"
+"                        % endfor\n"
+"                        <hr/>\n"
+"                    % endif\n"
+"                    <div style=\"text-align: center; margin: 16px 0px 16px 0px; font-size: 14px;\">\n"
+"                        <a href=\"${object.get_base_url()}/shop/cart?access_token=${object.access_token}\" target=\"_blank\" style=\"background-color: #875A7B; padding: 8px 16px 8px 16px; text-decoration: none; color: #fff; border-radius: 5px; font-size:13px;\">\n"
+"                            恢復訂單\n"
+"                        </a>\n"
+"                    </div>\n"
+"                    <div style=\"text-align: center;\"><strong>多謝惠顧 ${company.name}！</strong></div>\n"
+"                </td></tr>\n"
+"                <tr><td style=\"text-align:center;\">\n"
+"                  <hr width=\"100%\" style=\"background-color:rgb(204,204,204);border:medium none;clear:both;display:block;font-size:0px;min-height:1px;line-height:0; margin: 16px 0px 16px 0px;\"/>\n"
+"                </td></tr>\n"
+"            </table>\n"
+"        </td>\n"
+"    </tr>\n"
+"    <!-- FOOTER -->\n"
+"    <tr>\n"
+"        <td align=\"center\" style=\"min-width: 590px;\">\n"
+"            <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: white; font-size: 11px; padding: 0px 8px 0px 8px; border-collapse:separate;\">\n"
+"                <tr><td valign=\"middle\" align=\"left\">\n"
+"                    ${company.name}\n"
+"                </td></tr>\n"
+"                <tr><td valign=\"middle\" align=\"left\" style=\"opacity: 0.7;\">\n"
+"                    ${company.phone}\n"
+"                    % if company.email\n"
+"                        | <a href=\"'mailto:%s' % ${company.email}\" style=\"text-decoration:none; color: #454748;\">${company.email}</a>\n"
+"                    % endif\n"
+"                    % if company.website\n"
+"                        | <a href=\"'%s' % ${company.website}\" style=\"text-decoration:none; color: #454748;\">${company.website}</a>\n"
+"                    % endif\n"
+"                </td></tr>\n"
+"            </table>\n"
+"        </td>\n"
+"    </tr>\n"
+"</tbody>\n"
+"</table>\n"
+"</td></tr>\n"
+"<!-- POWERED BY -->\n"
+"<tr><td align=\"center\" style=\"min-width: 590px;\">\n"
+"    <table border=\"0\" cellpadding=\"0\" cellspacing=\"0\" width=\"590\" style=\"min-width: 590px; background-color: #F1F1F1; color: #454748; padding: 8px; border-collapse:separate;\">\n"
+"      <tr><td style=\"text-align: center; font-size: 13px;\">\n"
+"        由 <a target=\"_blank\" href=\"https://www.odoo.com?utm_source=db&amp;utm_medium=website\" style=\"color: #875A7B;\">Odoo</a> 驅動\n"
+"      </td></tr>\n"
+"    </table>\n"
+"</td></tr>\n"
+"</table>\n"
+"            "
 
 #. module: website_sale
 #: model_terms:ir.ui.view,arch_db:website_sale.payment_confirmation_status
@@ -251,6 +345,16 @@ msgstr "<i class=\"fa fa-print\"/> 列印"
 #: model_terms:ir.ui.view,arch_db:website_sale.product
 msgid "<i class=\"fa fa-shopping-cart\"/> Add to Cart"
 msgstr "<i class=\"fa fa-shopping-cart\"></i>添加到購物車"
+
+#. module: website_sale
+#: model_terms:ir.ui.view,arch_db:website_sale.address
+msgid "<option value=\"\">Country...</option>"
+msgstr "<option value=\"\">國家 / 地區⋯</option>"
+
+#. module: website_sale
+#: model_terms:ir.ui.view,arch_db:website_sale.address
+msgid "<option value=\"\">State / Province...</option>"
+msgstr "<option value=\"\">州 / 省⋯</option>"
 
 #. module: website_sale
 #: code:addons/website_sale/models/crm_team.py:0
@@ -844,7 +948,7 @@ msgstr "一旦您的帳戶開具了應收憑單，就無法更改名字. 如需�
 msgid ""
 "Changing your name is not allowed once documents have been issued for your "
 "account. Please contact us directly for this operation."
-msgstr ""
+msgstr "當已有文件為你的帳戶發出後，就不可更改你的名稱。 請直接聯絡我們進行此操作。"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_product_public_category__child_id
@@ -1001,11 +1105,6 @@ msgstr "沙發"
 #: model_terms:ir.ui.view,arch_db:website_sale.address
 msgid "Country"
 msgstr "國家"
-
-#. module: website_sale
-#: model_terms:ir.ui.view,arch_db:website_sale.address
-msgid "Country..."
-msgstr "國家..."
 
 #. module: website_sale
 #: model_terms:ir.actions.act_window,help:website_sale.product_template_action_website
@@ -2209,7 +2308,7 @@ msgstr "產品模板"
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_product_image__product_variant_id
 msgid "Product Variant"
-msgstr "產品變體"
+msgstr "產品款式"
 
 #. module: website_sale
 #: model:ir.ui.menu,name:website_sale.product_catalog_variants
@@ -2755,11 +2854,6 @@ msgid "State / Province"
 msgstr "州/省"
 
 #. module: website_sale
-#: model_terms:ir.ui.view,arch_db:website_sale.address
-msgid "State / Province..."
-msgstr "州/省..."
-
-#. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_res_company__website_sale_onboarding_payment_acquirer_state
 msgid "State of the website sale onboarding payment acquirer step"
 msgstr "網站銷售初始付款服務商步驟的狀態"
@@ -3174,7 +3268,7 @@ msgstr "網站網址"
 #. module: website_sale
 #: model:ir.model,name:website_sale.model_website_visitor
 msgid "Website Visitor"
-msgstr "網站訪問者"
+msgstr "網站訪客"
 
 #. module: website_sale
 #: model:ir.model.fields,field_description:website_sale.field_product_public_category__website_meta_description
