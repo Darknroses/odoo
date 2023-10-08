@@ -3022,16 +3022,16 @@ msgid "Invalid domain left operand %s"
 msgstr "非法的域左操作符 %s"
 
 #. module: stock
-#: code:addons/stock/models/product.py:0
+#: code:addons/stock/models/product.py:0 code:addons/stock/models/product.py:0
 #, python-format
 msgid "Invalid domain operator %s"
 msgstr "非法的域操作符 %s"
 
 #. module: stock
-#: code:addons/stock/models/product.py:0
+#: code:addons/stock/models/product.py:0 code:addons/stock/models/product.py:0
 #, python-format
-msgid "Invalid domain right operand %s"
-msgstr "非法的域右操作符 %s"
+msgid "Invalid domain right operand '%s'. It must be of type Integer/Float"
+msgstr ""
 
 #. module: stock
 #: code:addons/stock/models/product.py:0
@@ -5406,7 +5406,7 @@ msgstr "補給"
 #. module: stock
 #: model:stock.location.route,name:stock.route_warehouse0_mto
 msgid "Replenish on Order (MTO)"
-msgstr "訂單補充 （MTO）"
+msgstr "訂單補給（特別訂製）"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_product_replenish
