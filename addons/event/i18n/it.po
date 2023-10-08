@@ -149,7 +149,7 @@ msgid ""
 "                                            <span class=\"text-muted\">Air your tracks online through a Youtube integration</span>"
 msgstr ""
 "<br/>\n"
-"                                            <span class=\"text-muted\">Trasmette in rete le tracce attraverso l'integrazione con YouTube</span>"
+"                                            <span class=\"text-muted\">Trasmette le tracce in rete attraverso l'integrazione con YouTube</span>"
 
 #. module: event
 #: model_terms:ir.ui.view,arch_db:event.res_config_settings_view_form
@@ -2602,7 +2602,7 @@ msgstr "Pianificatori e-mail"
 #. module: event
 #: model:ir.model,name:event.model_event_type_mail
 msgid "Mail Scheduling on Event Category"
-msgstr "Pianificazione e-mail  su categoria evento"
+msgstr "Pianificazione e-mail su categoria evento"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_mail_registration__mail_sent
@@ -2612,7 +2612,7 @@ msgstr "E-mail inviata"
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_mail__mail_sent
 msgid "Mail Sent on Event"
-msgstr "E-mail dell'evento inviata"
+msgstr "E-mail evento inviata"
 
 #. module: event
 #: model:ir.model.fields,field_description:event.field_event_event__message_main_attachment_id
