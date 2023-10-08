@@ -13,7 +13,6 @@
 # Léonie Bouchat <lbo@odoo.com>, 2021
 # Friederike Fasterling-Nesselbosch, 2022
 # Martin Trigaux, 2023
-# Marianna Ciofani, 2023
 # Sergio Zanchetta <primes2h@gmail.com>, 2023
 # 
 msgid ""
@@ -762,7 +761,7 @@ msgstr "Lettore codici a barre"
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "Barcode Scanner/Card Reader"
-msgstr "Lettore codici a barre/carta"
+msgstr "Lettore codici a barre/carte"
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.report_saledetails
@@ -2462,7 +2461,7 @@ msgstr "Movimenti contabili"
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_digest_digest__kpi_pos_total_value
 msgid "Kpi Pos Total Value"
-msgstr "Valore totale KPI POS"
+msgstr "ICP POS - Valore totale"
 
 #. module: point_of_sale
 #: model:product.product,name:point_of_sale.led_lamp
@@ -5755,7 +5754,8 @@ msgstr "Utilizzo di un listino prezzi."
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form
 msgid "Use barcodes to scan products, customer cards, etc."
-msgstr "Utilizzo di codici a barre per lettura prodotti, tessere clienti ecc."
+msgstr ""
+"Utilizzo di codici a barre per lettura prodotti, tessere clienti ecc..."
 
 #. module: point_of_sale
 #: model_terms:ir.ui.view,arch_db:point_of_sale.pos_config_view_form

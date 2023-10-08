@@ -40,9 +40,9 @@
 # Mateus Lopes <mateus1@gmail.com>, 2020
 # grazziano <grazziano.do+transifex@gmail.com>, 2020
 # PopSolutions Cooperativa Digital <popsolutions.co@gmail.com>, 2020
-# Éder Brito <britoederr@gmail.com>, 2021
 # douglas custodio <douglascstd@yahoo.com>, 2022
 # Kevilyn Rosa, 2023
+# Éder Brito <britoederr@gmail.com>, 2023
 # Layna Nascimento, 2023
 # 
 msgid ""
@@ -13001,8 +13001,8 @@ msgid ""
 "Child server actions that will be executed. Note that the last return "
 "returned action value will be used as global return value."
 msgstr ""
-"Ações de servidor filho que serão executadas. Note-se que o último retorno "
-"retornou o valor da ação que será usado como valor de retorno global."
+"Ações secundárias de servidor que serão executadas. Observe que o último "
+"valor de ação retornado será usado como valor de retorno global."
 
 #. module: base
 #: model:res.country,name:base.cl
@@ -13421,7 +13421,7 @@ msgstr "Calcular"
 #: code:addons/base/models/ir_model.py:0
 #, python-format
 msgid "Compute method cannot depend on field 'id'"
-msgstr ""
+msgstr "O método de cálculo não pode depender do campo 'id'"
 
 #. module: base
 #: model:ir.module.module,summary:base.module_website_crm_score
@@ -18916,10 +18916,16 @@ msgid "Invalid 'group by' parameter"
 msgstr "Invalid 'group by' parameter"
 
 #. module: base
+#: code:addons/template_inheritance.py:0
+#, python-format
+msgid "Invalid Expression while parsing xpath %r"
+msgstr ""
+
+#. module: base
 #: code:addons/base/models/ir_default.py:0
 #, python-format
 msgid "Invalid JSON format in Default Value field."
-msgstr ""
+msgstr "Formato JSON inválido no campo Valor padrão."
 
 #. module: base
 #: code:addons/models.py:0
@@ -31699,7 +31705,7 @@ msgstr "You cannot deactivate the user you're currently logged in as."
 #: code:addons/base/models/ir_config_parameter.py:0
 #, python-format
 msgid "You cannot delete the %s record."
-msgstr ""
+msgstr "Você não pode deletar o registro %s."
 
 #. module: base
 #: code:addons/base/models/res_lang.py:0
@@ -31728,7 +31734,7 @@ msgstr "Não é possível mesclar um contato com um de seus pais."
 #: code:addons/base/models/ir_config_parameter.py:0
 #, python-format
 msgid "You cannot rename config parameters with keys %s"
-msgstr ""
+msgstr "Você não pode renomear os parâmetros de configuração com as chaves %s"
 
 #. module: base
 #: code:addons/models.py:0

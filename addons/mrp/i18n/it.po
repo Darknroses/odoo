@@ -23,7 +23,6 @@
 # Iacopo Simonelli <lsi@odoo.com>, 2020
 # Stefano Consolaro <stefano.consolaro@mymage.it>, 2022
 # Friederike Fasterling-Nesselbosch, 2022
-# Marianna Ciofani, 2023
 # Sergio Zanchetta <primes2h@gmail.com>, 2023
 # 
 msgid ""
@@ -2533,7 +2532,7 @@ msgstr "Produzione del prodotto"
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_stock_warehouse__manufacture_to_resupply
 msgid "Manufacture to Resupply"
-msgstr "Rifornire su produzione"
+msgstr "Rifornimento su produzione"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_product_product__mrp_product_qty
@@ -3589,7 +3588,7 @@ msgstr "Quantità:"
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_workorder__move_raw_ids
 msgid "Raw Moves"
-msgstr "Movimenti grezzi"
+msgstr "Movimenti materie prime"
 
 #. module: mrp
 #: model:ir.model.fields.selection,name:mrp.selection__mrp_production__reservation_state__assigned
@@ -3790,7 +3789,7 @@ msgstr "Informazioni programmazione"
 #: model_terms:ir.ui.view,arch_db:mrp.mrp_production_form_view
 #, python-format
 msgid "Scrap"
-msgstr "Scarta"
+msgstr "Scarto"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_mrp_production__scrap_count
@@ -4143,12 +4142,12 @@ msgstr "DiBa secondaria"
 #. module: mrp
 #: model_terms:ir.ui.view,arch_db:mrp.res_config_settings_view_form
 msgid "Subcontract the production of some products"
-msgstr "Esternalizza la produzione di alcuni prodotti"
+msgstr "Affida in subfornitura la produzione di alcuni prodotti"
 
 #. module: mrp
 #: model:ir.model.fields,field_description:mrp.field_res_config_settings__module_mrp_subcontracting
 msgid "Subcontracting"
-msgstr "Esternalizzazione"
+msgstr "Subfornitura"
 
 #. module: mrp
 #: model:product.product,name:mrp.product_product_computer_desk
