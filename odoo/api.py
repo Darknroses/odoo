@@ -524,6 +524,7 @@ class Environment(Mapping):
                 return env
 
         # otherwise create environment, and add it in the set
+        assert isinstance(cr, BaseCursor)
         self = object.__new__(cls)
         self.cr, self.uid, self.context, self.su = self.args = (cr, uid, frozendict(context), su)
         self.uid_origin = uid_origin
@@ -1162,6 +1163,8 @@ class Cache(object):
             except KeyError:
                 ids.append(record_id)
             else:
+                if field.type == "monetary":
+                    value = field.convert_to_cache(value, records.browse(record_id))
                 if val != value:
                     ids.append(record_id)
         return records.browse(ids)
@@ -1330,3 +1333,4 @@ class Starred:
 # keep those imports here in order to handle cyclic dependencies correctly
 from odoo import SUPERUSER_ID
 from odoo.modules.registry import Registry
+from .sql_db import BaseCursor

@@ -664,7 +664,7 @@ msgstr ""
 #. module: stock_account
 #: model:ir.model,name:stock_account.model_report_stock_report_product_product_replenishment
 msgid "Stock Replenishment Report"
-msgstr ""
+msgstr "Noliktavas papildināšanas pārskats"
 
 #. module: stock_account
 #: model:ir.model,name:stock_account.model_stock_request_count
@@ -706,7 +706,7 @@ msgstr "Krājumu konts (izejošais)"
 #: model:ir.model.fields,field_description:stock_account.field_stock_move__stock_valuation_layer_ids
 #: model:ir.model.fields,field_description:stock_account.field_stock_valuation_layer__stock_valuation_layer_ids
 msgid "Stock Valuation Layer"
-msgstr ""
+msgstr "Noliktavas vērtēšanas slānis"
 
 #. module: stock_account
 #: model:ir.model.fields,help:stock_account.field_product_product__company_currency_id
@@ -994,6 +994,15 @@ msgstr ""
 msgid ""
 "You don't have any stock input account defined on your product category. You"
 " must define one before processing this operation."
+msgstr ""
+
+#. module: stock_account
+#. odoo-python
+#: code:addons/stock_account/models/product.py:0
+#, python-format
+msgid ""
+"You don't have any output valuation account defined on your product "
+"category. You must define one before processing this operation."
 msgstr ""
 
 #. module: stock_account

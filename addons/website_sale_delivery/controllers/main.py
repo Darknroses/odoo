@@ -4,8 +4,8 @@
 from odoo import http, _
 from odoo.http import request
 from odoo.addons.payment import utils as payment_utils
-from odoo.addons.website_sale.controllers.main import WebsiteSale
-from odoo.exceptions import UserError
+from odoo.addons.website_sale.controllers.main import WebsiteSale, PaymentPortal
+from odoo.exceptions import UserError, ValidationError
 
 
 class WebsiteSaleDelivery(WebsiteSale):
@@ -193,17 +193,33 @@ class WebsiteSaleDelivery(WebsiteSale):
                     name=_('Anonymous express checkout partner for order %s', order_sudo.name),
                 )
 
-        # Returns the list of develivery carrier available for the sale order.
+        # Returns the list of delivery carrier available for the sale order.
         return sorted([{
             'id': carrier.id,
             'name': carrier.name,
             'description': carrier.website_description,
-            'minorAmount': payment_utils.to_minor_currency_units(
-                WebsiteSaleDelivery._get_rate(carrier, order_sudo, is_express_checkout_flow=True)['price'],
-                order_sudo.currency_id,
-            ),
-        } for carrier in order_sudo._get_delivery_methods()],
-        key=lambda carrier: carrier['minorAmount'])
+            'minorAmount': payment_utils.to_minor_currency_units(price, order_sudo.currency_id),
+        } for carrier, price in WebsiteSaleDelivery._get_carriers_express_checkout(order_sudo).items()
+        ], key=lambda carrier: carrier['minorAmount'])
+
+    @staticmethod
+    def _get_carriers_express_checkout(order_sudo):
+        """ Return available carriers and their prices for the given order.
+
+        :param sale.order order_sudo: The sudoed sales order.
+        :rtype: dict
+        :return: A dict with a `delivery.carrier` recordset as key, and a rate shipment price as
+                 value.
+        """
+        res = {}
+        for carrier in order_sudo._get_delivery_methods():
+            rate = WebsiteSaleDelivery._get_rate(carrier, order_sudo, is_express_checkout_flow=True)
+            if rate['success']:
+                fname = f'{carrier.delivery_type}_use_locations'
+                if hasattr(carrier, fname) and getattr(carrier, fname):
+                    continue  # Express checkout doesn't allow selecting locations.
+                res[carrier] = rate['price']
+        return res
 
     @staticmethod
     def _get_rate(carrier, order, is_express_checkout_flow=False):
@@ -306,3 +322,13 @@ class WebsiteSaleDelivery(WebsiteSale):
                 'new_amount_total_raw': order.amount_total,
             }
         return {}
+
+
+class PaymentPortalDelivery(PaymentPortal):
+
+    @http.route()
+    def shop_payment_transaction(self, *args, **kwargs):
+        order = request.website.sale_get_order()
+        if not order.only_services and not order.carrier_id:
+            raise ValidationError(_("No shipping method is selected."))
+        return super().shop_payment_transaction(*args, **kwargs)

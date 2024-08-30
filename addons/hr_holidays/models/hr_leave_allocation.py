@@ -79,7 +79,7 @@ class HolidaysAllocation(models.Model):
     number_of_days_display = fields.Float(
         'Duration (days)', compute='_compute_number_of_days_display',
         states={'draft': [('readonly', False)], 'confirm': [('readonly', False)]},
-        help="If Accrual Allocation: Number of days allocated in addition to the ones you will get via the accrual' system.")
+        help="If Accrual Allocation: Days given by the accrual system.")
     number_of_hours_display = fields.Float(
         'Duration (hours)', compute='_compute_number_of_hours_display',
         help="If Accrual Allocation: Number of hours allocated in addition to the ones you will get via the accrual' system.")
@@ -146,6 +146,11 @@ class HolidaysAllocation(models.Model):
          "The employee, department, company or employee category of this request is missing. Please make sure that your user login is linked to an employee."),
         ('duration_check', "CHECK( ( number_of_days > 0 AND allocation_type='regular') or (allocation_type != 'regular'))", "The duration must be greater than 0."),
     ]
+
+    @api.constrains('date_from', 'date_to')
+    def _check_date_from_date_to(self):
+        if any(allocation.date_to and allocation.date_from > allocation.date_to for allocation in self):
+            raise UserError(_("The Start Date of the Validity Period must be anterior to the End Date."))
 
     # The compute does not get triggered without a depends on record creation
     # aka keep the 'useless' depends

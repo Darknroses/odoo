@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
 import re
@@ -117,13 +116,14 @@ class HrExpense(models.Model):
 
     @api.depends('product_has_cost')
     def _compute_currency_id(self):
-        for expense in self.filtered("product_has_cost"):
-            expense.currency_id = expense.company_currency_id
+        for expense in self:
+            if expense.product_has_cost and expense.state == 'draft':
+                expense.currency_id = expense.company_currency_id
 
     @api.onchange('product_has_cost')
     def _onchange_product_has_cost(self):
         # Reset quantity to 1, in case of 0-cost product
-        if not self.product_has_cost:
+        if not self.product_has_cost and self.state == 'draft':
             self.quantity = 1
 
     @api.depends('date', 'currency_id', 'company_currency_id', 'company_id')
@@ -149,6 +149,9 @@ class HrExpense(models.Model):
             expense.product_has_cost = expense.product_id and (float_compare(expense.product_id.standard_price, 0.0, precision_digits=2) != 0)
             tax_ids = expense.product_id.supplier_taxes_id.filtered(lambda tax: tax.company_id == expense.company_id)
             expense.product_has_tax = bool(tax_ids)
+            if not expense.product_has_cost and expense.state == 'draft':
+                expense.unit_amount = expense.total_amount_company
+                expense.quantity = 1
 
     @api.depends('sheet_id', 'sheet_id.account_move_id', 'sheet_id.state')
     def _compute_state(self):
@@ -159,7 +162,7 @@ class HrExpense(models.Model):
                 expense.state = "refused"
             elif expense.sheet_id.state == "approve" or expense.sheet_id.state == "post":
                 expense.state = "approved"
-            elif not expense.sheet_id.account_move_id:
+            elif not expense.sheet_id.account_move_id and expense.sheet_id.state != 'done':
                 expense.state = "reported"
             else:
                 expense.state = "done"
@@ -293,6 +296,8 @@ class HrExpense(models.Model):
     @api.depends('product_id', 'attachment_number', 'currency_rate')
     def _compute_unit_amount(self):
         for expense in self:
+            if expense.state != 'draft':
+                continue
             product_id = expense.product_id
             if product_id and expense.product_has_cost and not expense.attachment_number or (expense.attachment_number and not expense.unit_amount):
                 expense.unit_amount = product_id.price_compute(
@@ -756,12 +761,7 @@ Or send your receipts at <a href="mailto:%(email)s?subject=Lunch%%20with%%20cust
     @api.model
     def message_new(self, msg_dict, custom_values=None):
         email_address = email_split(msg_dict.get('email_from', False))[0]
-
-        employee = self.env['hr.employee'].search([
-            '|',
-            ('work_email', 'ilike', email_address),
-            ('user_id.email', 'ilike', email_address)
-        ], limit=1)
+        employee = self._get_employee_from_email(email_address)
 
         if not employee:
             return super().message_new(msg_dict, custom_values=custom_values)
@@ -802,6 +802,29 @@ Or send your receipts at <a href="mailto:%(email)s?subject=Lunch%%20with%%20cust
         expense = super(HrExpense, self).message_new(msg_dict, dict(custom_values or {}, **vals))
         self._send_expense_success_mail(msg_dict, expense)
         return expense
+
+    @api.model
+    def _get_employee_from_email(self, email_address):
+        employee = self.env['hr.employee'].search([
+            ('user_id', '!=', False),
+            '|',
+            ('work_email', 'ilike', email_address),
+            ('user_id.email', 'ilike', email_address),
+        ])
+
+        if len(employee) > 1:
+            # Several employees can be linked to the same user.
+            # In that case, we only keep the employee that matched the user's company.
+            return employee.filtered(lambda e: e.company_id == e.user_id.company_id)
+
+        if not employee:
+            # An employee does not always have a user.
+            return self.env['hr.employee'].search([
+                ('user_id', '=', False),
+                ('work_email', 'ilike', email_address),
+            ], limit=1)
+
+        return employee
 
     @api.model
     def _parse_product(self, expense_description):
@@ -1010,7 +1033,16 @@ class HrExpenseSheet(models.Model):
     @api.depends('account_move_id.payment_state')
     def _compute_payment_state(self):
         for sheet in self:
-            sheet.payment_state = sheet.account_move_id.payment_state or 'not_paid'
+            sheet_move = sheet.account_move_id
+            if not sheet_move:
+                sheet.payment_state = 'not_paid'
+            elif sheet_move.currency_id.compare_amounts(
+                sum(sheet_move.reversal_move_id.mapped('amount_total')),
+                sheet_move.amount_total
+            ) == 0:
+                sheet.payment_state = 'reversed'
+            else:
+                sheet.payment_state = sheet_move.payment_state
 
     def _compute_attachment_number(self):
         for sheet in self:
@@ -1224,7 +1256,9 @@ class HrExpenseSheet(models.Model):
         move_lines = []
         for expense in self.expense_line_ids:
             expense_amount = expense.total_amount_company if self.is_multiple_currency else expense.total_amount
-            tax_data = self.env['account.tax']._compute_taxes([
+            tax_data = self.env['account.tax'].with_context(
+                caba_no_transition_account=expense.payment_mode == 'company_account',
+            )._compute_taxes([
                 expense._convert_to_tax_base_line_dict(price_unit=expense_amount, currency=currency)
             ])
             rate = abs(expense_amount / expense.total_amount_company)
@@ -1387,6 +1421,7 @@ class HrExpenseSheet(models.Model):
         for line in self.expense_line_ids:
             line._validate_distribution(**{
                 'account': line.account_id.id,
+                'product': line.product_id.id,
                 'business_domain': 'expense',
                 'company_id': line.company_id.id,
             })

@@ -47,6 +47,7 @@ from xmlrpc import client as xmlrpclib
 import requests
 import werkzeug.urls
 from lxml import etree, html
+from urllib3.util import Url, parse_url
 
 import odoo
 from odoo import api
@@ -830,6 +831,22 @@ def fchain(future, next_callback):
 
     return new_future
 
+
+def save_test_file(test_name, content, prefix, extension='png', logger=_logger, document_type='Screenshot', date_format="%Y%m%d_%H%M%S_%f"):
+    assert re.fullmatch(r'\w*_', prefix)
+    assert re.fullmatch(r'[a-z]+', extension)
+    assert re.fullmatch(r'\w+', test_name)
+    now = datetime.now().strftime(date_format)
+    screenshots_dir = pathlib.Path(odoo.tools.config['screenshots']) / get_db_name() / 'screenshots'
+    screenshots_dir.mkdir(parents=True, exist_ok=True)
+    fname = f'{prefix}{now}_{test_name}.{extension}'
+    full_path = screenshots_dir / fname
+
+    with full_path.open('wb') as f:
+        f.write(content)
+    logger.runbot(f'{document_type} in: {full_path}')
+
+
 class ChromeBrowser:
     """ Helper object to control a Chrome headless process. """
     remote_debugging_port = 0  # 9222, change it in a non-git-tracked file
@@ -857,7 +874,7 @@ class ChromeBrowser:
         self.screencast_frames = []
         os.makedirs(self.screenshots_dir, exist_ok=True)
 
-        self.window_size = test_class.browser_size
+        self.window_size = test_class.browser_size.replace('x', ',')
         self.touch_enabled = test_class.touch_enabled
         self.sigxcpu_handler = None
         self._chrome_start()
@@ -1052,6 +1069,7 @@ class ChromeBrowser:
         delay = 0.1
         tries = 0
         failure_info = None
+        message = ''
         while timeout > 0:
             try:
                 os.kill(self.chrome_pid, 0)
@@ -1129,6 +1147,9 @@ class ChromeBrowser:
                         else:
                             f.set_exception(ChromeBrowserException(res['error']['message']))
             except Exception:
+                msg = str(msg)
+                if msg and len(msg) > 500:
+                    msg = msg[:500] + '...'
                 _logger.exception("While processing message %s", msg)
 
     def _websocket_request(self, method, *, params=None, timeout=10.0):
@@ -1279,6 +1300,8 @@ which leads to stray network requests and inconsistencies."""
             wait()
 
     def _handle_screencast_frame(self, sessionId, data, metadata):
+        if not self.screencasts_frames_dir:
+            return
         self._websocket_send('Page.screencastFrameAck', params={'sessionId': sessionId})
         outfile = os.path.join(self.screencasts_frames_dir, 'frame_%05d.b64' % len(self.screencast_frames))
         try:
@@ -1330,6 +1353,8 @@ which leads to stray network requests and inconsistencies."""
             self._logger.debug('No screencast frames to encode')
             return None
 
+        self.stop_screencast()
+
         for f in self.screencast_frames:
             with open(f['file_path'], 'rb') as b64_file:
                 frame = base64.decodebytes(b64_file.read())
@@ -1357,7 +1382,11 @@ which leads to stray network requests and inconsistencies."""
                     duration = end_time - self.screencast_frames[i]['timestamp']
                     concat_file.write("file '%s'\nduration %s\n" % (frame_file_path, duration))
                 concat_file.write("file '%s'" % frame_file_path)  # needed by the concat plugin
-            r = subprocess.run([ffmpeg_path, '-intra', '-f', 'concat','-safe', '0', '-i', concat_script_path, '-pix_fmt', 'yuv420p', outfile])
+            try:
+                subprocess.run([ffmpeg_path, '-f', 'concat', '-safe', '0', '-i', concat_script_path, '-pix_fmt', 'yuv420p', '-g', '0', outfile], check=True)
+            except subprocess.CalledProcessError:
+                self._logger.error('Failed to encode screencast.')
+                return
             self._logger.log(25, 'Screencast in: %s', outfile)
         else:
             outfile = outfile.strip('.mp4')
@@ -1367,6 +1396,9 @@ which leads to stray network requests and inconsistencies."""
     def start_screencast(self):
         assert self.screencasts_dir
         self._websocket_send('Page.startScreencast')
+
+    def stop_screencast(self):
+        self._websocket_send('Page.stopScreencast')
 
     def set_cookie(self, name, value, path, domain):
         params = {'name': name, 'value': value, 'path': path, 'domain': domain}
@@ -1379,7 +1411,8 @@ which leads to stray network requests and inconsistencies."""
         self._websocket_request('Network.deleteCookies', params=params)
         return
 
-    def _wait_ready(self, ready_code, timeout=60):
+    def _wait_ready(self, ready_code=None, timeout=60):
+        ready_code = ready_code or "document.readyState === 'complete'"
         self._logger.info('Evaluate ready code "%s"', ready_code)
         start_time = time.time()
         result = None
@@ -1449,7 +1482,8 @@ which leads to stray network requests and inconsistencies."""
     def clear(self):
         self._websocket_send('Page.stopScreencast')
         if self.screencasts_dir and os.path.isdir(self.screencasts_frames_dir):
-            shutil.rmtree(self.screencasts_frames_dir)
+            self.screencasts_dir = self.screencasts_frames_dir = None
+            shutil.rmtree(self.screencasts_frames_dir, ignore_errors=True)
         self.screencast_frames = []
         self._websocket_request('Page.stopLoading')
         self._websocket_request('Runtime.evaluate', params={'expression': """
@@ -1613,6 +1647,38 @@ class HttpCase(TransactionCase):
         # setup an url opener helper
         self.opener = Opener(self.cr)
 
+    def parse_http_location(self, location):
+        """ Parse a Location http header typically found in 201/3xx
+        responses, return the corresponding Url object. The scheme/host
+        are taken from ``base_url()`` in case they are missing from the
+        header.
+
+        https://urllib3.readthedocs.io/en/stable/reference/urllib3.util.html#urllib3.util.Url
+        """
+        if not location:
+            return Url()
+        base_url = parse_url(self.base_url())
+        url = parse_url(location)
+        return Url(
+            scheme=url.scheme or base_url.scheme,
+            auth=url.auth or base_url.auth,
+            host=url.host or base_url.host,
+            port=url.port or base_url.port,
+            path=url.path,
+            query=url.query,
+            fragment=url.fragment,
+        )
+
+    def assertURLEqual(self, test_url, truth_url, message=None):
+        """ Assert that two URLs are equivalent. If any URL is missing
+        a scheme and/or host, assume the same scheme/host as base_url()
+        """
+        self.assertEqual(
+            self.parse_http_location(test_url).url,
+            self.parse_http_location(truth_url).url,
+            message,
+        )
+
     @classmethod
     def start_browser(cls):
         # start browser on demand
@@ -1756,7 +1822,6 @@ class HttpCase(TransactionCase):
 
             # Needed because tests like test01.js (qunit tests) are passing a ready
             # code = ""
-            ready = ready or "document.readyState === 'complete'"
             self.assertTrue(self.browser._wait_ready(ready), 'The ready "%s" code was always falsy' % ready)
 
             error = False

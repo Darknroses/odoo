@@ -53,7 +53,7 @@ msgstr ""
 #. module: mail_bot
 #: model:ir.model,name:mail_bot.model_ir_http
 msgid "HTTP Routing"
-msgstr ""
+msgstr "HTTP-маршрутызацыя"
 
 #. module: mail_bot
 #: code:addons/mail_bot/models/res_users.py:0
@@ -75,8 +75,9 @@ msgstr ""
 #, python-format
 msgid ""
 "I am a simple bot, but if that's a dog, he is the cutest 😊 "
-"<br/>Congratulations, you finished this tour. You can now <b>close this chat"
-" window</b>. Enjoy discovering Odoo."
+"<br/>Congratulations, you finished this tour. You can now <b>close this "
+"conversation</b> or start the tour again with typing <span "
+"class=\"o_odoobot_command\">start the tour</span>. Enjoy discovering Odoo!"
 msgstr ""
 
 #. module: mail_bot

@@ -2791,7 +2791,7 @@ msgstr "無効な項目連携"
 msgid ""
 "Invalid field chain. You may have used a non-existing field name or followed"
 " a non-relational field."
-msgstr "無効なフィールド・チェーンです。存在しないフィールド名を使用したか、関連性のないフィールドをたどった可能性があります。"
+msgstr "無効なフィールド・チェーンです。存在しないフィールド名を使用したか、非リレーショナルフィールドをたどった可能性があります。"
 
 #. module: web
 #. odoo-javascript
@@ -5157,6 +5157,7 @@ msgstr "構文エラー"
 
 #. module: web
 #. odoo-javascript
+#: code:addons/web/static/src/core/commands/command_items.xml:0
 #: code:addons/web/static/src/webclient/user_menu/user_menu_items.xml:0
 #, python-format
 msgid "TIP"
@@ -5873,6 +5874,7 @@ msgstr "サブスクリプションはすでにデータベースにリンクさ
 #: code:addons/web/static/src/legacy/js/views/list/list_controller.js:0
 #: code:addons/web/static/src/legacy/xml/base.xml:0
 #: code:addons/web/static/src/legacy/xml/base.xml:0
+#: code:addons/web/static/src/legacy/xml/control_panel.xml:0
 #: code:addons/web/static/src/search/favorite_menu/favorite_menu.js:0
 #: code:addons/web/static/src/views/fields/domain/domain_field.xml:0
 #: code:addons/web/static/src/views/fields/domain/domain_field.xml:0
@@ -6171,6 +6173,13 @@ msgstr "全て"
 #, python-format
 msgid "all records"
 msgstr "全レコード"
+
+#. module: web
+#. odoo-javascript
+#: code:addons/web/static/src/core/commands/command_items.xml:0
+#, python-format
+msgid "and"
+msgstr "と"
 
 #. module: web
 #. odoo-javascript
@@ -6771,3 +6780,10 @@ msgstr "デフォルトテキストを入力するかENTERを押して下さい�
 #, python-format
 msgid "— press"
 msgstr "ー押す"
+
+#. module: web
+#. odoo-javascript
+#: code:addons/web/static/src/core/commands/command_items.xml:0
+#, python-format
+msgid "— search for"
+msgstr "— 検索"

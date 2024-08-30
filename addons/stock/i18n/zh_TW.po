@@ -7,15 +7,15 @@
 # Martin Trigaux, 2022
 # 226408 台北 <226408@so8d.com>, 2022
 # Benson <Benson.Dr@Gmail.com>, 2023
-# Tony Ng, 2023
+# Tony Ng, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 16.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-05-23 08:22+0000\n"
+"POT-Creation-Date: 2024-02-06 13:31+0000\n"
 "PO-Revision-Date: 2022-09-22 05:55+0000\n"
-"Last-Translator: Tony Ng, 2023\n"
+"Last-Translator: Tony Ng, 2024\n"
 "Language-Team: Chinese (Taiwan) (https://app.transifex.com/odoo/teams/41243/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -143,6 +143,13 @@ msgstr " 當不為 0 時，儲存在此位置的產品的庫存盤點日期將�
 #. odoo-python
 #: code:addons/stock/models/stock_warehouse.py:0
 #, python-format
+msgid "%(name)s (copy)(%(id)s)"
+msgstr "%(name)s（副本）(%(id)s)"
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_warehouse.py:0
+#, python-format
 msgid "%(warehouse)s: Supply Product from %(supplier)s"
 msgstr "%(warehouse)s: 從%(supplier)s供應產品"
 
@@ -150,6 +157,7 @@ msgstr "%(warehouse)s: 從%(supplier)s供應產品"
 #. odoo-python
 #: code:addons/stock/models/stock_location.py:0
 #: code:addons/stock/models/stock_package_type.py:0
+#: code:addons/stock/models/stock_picking.py:0
 #: code:addons/stock/models/stock_storage_category.py:0
 #, python-format
 msgid "%s (copy)"
@@ -1157,8 +1165,8 @@ msgid "Automatic No Step Added"
 msgstr "自動，不增加步驟"
 
 #. module: stock
-#. odoo-python
 #. odoo-javascript
+#. odoo-python
 #: code:addons/stock/models/stock_picking.py:0
 #: code:addons/stock/static/src/widgets/forecast_widget.xml:0
 #: model:ir.model.fields.selection,name:stock.selection__stock_move__state__assigned
@@ -1755,6 +1763,11 @@ msgid ""
 msgstr "量度單位必須屬於相同類別，才可進行換算。單位換算會按照比例計算。"
 
 #. module: stock
+#: model:ir.actions.server,name:stock.stock_quant_stock_move_line_desynchronization
+msgid "Correct inconsistencies for reservation"
+msgstr ""
+
+#. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_location__posx
 msgid "Corridor (X)"
 msgstr "通道(X)"
@@ -1796,7 +1809,7 @@ msgstr "逾期揀貨數"
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_picking_type__count_picking_ready
 msgid "Count Picking Ready"
-msgstr "揀貨數準備好"
+msgstr "點算就緒揀貨"
 
 #. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_picking_type__count_picking_waiting
@@ -2772,7 +2785,7 @@ msgstr ""
 #: model:ir.model.fields,help:stock.field_stock_scrap__tracking
 #: model:ir.model.fields,help:stock.field_stock_track_line__tracking
 msgid "Ensure the traceability of a storable product in your warehouse."
-msgstr "確保可以追溯您倉庫中的庫存產品."
+msgstr "確保倉庫內可儲存產品的可追蹤性。"
 
 #. module: stock
 #. odoo-javascript
@@ -2893,6 +2906,13 @@ msgstr "篩選"
 #: model:ir.model.fields,field_description:stock.field_stock_move__next_serial
 msgid "First SN"
 msgstr "首個序號"
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid "Fix discrepancies"
+msgstr ""
 
 #. module: stock
 #: model:ir.model.fields.selection,name:stock.selection__stock_rule__group_propagation_option__fixed
@@ -3688,6 +3708,7 @@ msgstr "域左運算項 %s 無效"
 #. module: stock
 #. odoo-python
 #: code:addons/stock/models/product.py:0 code:addons/stock/models/product.py:0
+#: code:addons/stock/models/stock_lot.py:0
 #, python-format
 msgid "Invalid domain operator %s"
 msgstr "域的運算符 %s 無效"
@@ -3695,6 +3716,7 @@ msgstr "域的運算符 %s 無效"
 #. module: stock
 #. odoo-python
 #: code:addons/stock/models/product.py:0 code:addons/stock/models/product.py:0
+#: code:addons/stock/models/stock_lot.py:0
 #, python-format
 msgid "Invalid domain right operand '%s'. It must be of type Integer/Float"
 msgstr "域右運算項「%s」無效。它必須是整數或浮點數類型。"
@@ -3907,8 +3929,21 @@ msgstr "您不能保留超出庫存的%s 產品."
 #: code:addons/stock/models/stock_quant.py:0
 #, python-format
 msgid ""
-"It is not possible to unreserve more products of %s than you have in stock."
-msgstr "不能取消保超過庫存數量的 %s 產品."
+"It is not possible to reserve more products of %s than you have in stock.\n"
+"\n"
+"You can fix the discrepancies by clicking on the button below.\n"
+"The correction will remove the reservation of the impacted operations on all companies.\n"
+"If the error persists, or you see this message appear often, please submit a Support Ticket at https://www.odoo.com/help"
+msgstr ""
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_quant.py:0
+#, python-format
+msgid ""
+"It is not possible to unreserve more products of %s than you have in stock.\n"
+"Please contact your system administrator to rectify this issue."
+msgstr ""
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_picking__move_type
@@ -4332,6 +4367,13 @@ msgstr "地點: 到達時"
 #, python-format
 msgid "Locations"
 msgstr "位置"
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_picking.py:0
+#, python-format
+msgid "Locations to update"
+msgstr "待更新位置"
 
 #. module: stock
 #: model_terms:ir.ui.view,arch_db:stock.view_picking_form
@@ -4985,8 +5027,8 @@ msgid "Normal"
 msgstr "一般"
 
 #. module: stock
-#. odoo-python
 #. odoo-javascript
+#. odoo-python
 #: code:addons/stock/models/stock_picking.py:0
 #: code:addons/stock/static/src/stock_forecasted/forecasted_details.xml:0
 #: code:addons/stock/static/src/widgets/forecast_widget.xml:0
@@ -6962,6 +7004,14 @@ msgid ""
 msgstr "將會為這些補充倉庫建立路線，而且您可以在產品和產品類別選擇它們"
 
 #. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_location.py:0
+#: code:addons/stock/models/stock_rule.py:0
+#, python-format
+msgid "Rule %s belongs to %s while the route belongs to %s."
+msgstr "規則 %s 屬於 %s，而路線屬於 %s。"
+
+#. module: stock
 #: model:ir.model.fields,field_description:stock.field_stock_rule__rule_message
 msgid "Rule Message"
 msgstr "規則消息"
@@ -8259,7 +8309,8 @@ msgid ""
 "with this operation type. It is possible however to change it or that the "
 "routes put another location. If it is empty, it will check for the customer "
 "location on the partner. "
-msgstr "這是使用此操作類型以手動建立揀貨時的預設目的地位置.但是可以改變它或者將路線放在另一位置.如果它是空的，它將於合作夥伴上檢查客戶位置. "
+msgstr ""
+"你使用此操作類型手動建立提貨時，會使用的預設目標位置。不過，你可更改此位置，或將路線設為向另一個位置放置。如果留空，系統會檢查為合作夥伴設定的客戶位置。"
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_picking_type__default_location_src_id
@@ -8268,7 +8319,8 @@ msgid ""
 "this operation type. It is possible however to change it or that the routes "
 "put another location. If it is empty, it will check for the supplier "
 "location on the partner. "
-msgstr "當您使用此操作類型手動建立揀貨時的預設來源位置.但是有可能改變它或者將路線放置在另一位置.如果它是空的，它將檢查合作夥伴上的供應商位置. "
+msgstr ""
+"你使用此操作類型手動建立提貨時，會使用的預設來源位置。不過，你可更改此位置，或將路線設為向另一個位置放置。如果留空，系統會檢查為合作夥伴設定的供應商位置。"
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_stock_quant__owner_id
@@ -8423,7 +8475,7 @@ msgid ""
 "recommended that you select a unique prefix to avoid issues and/or repeated "
 "reference values or assign the existing reference sequence to this operation"
 " type."
-msgstr ""
+msgstr "此序列字首已被其他操作類型使用。建議您選擇獨特的字首,以避免問題和/或重複的參考值，或將現有參考序列指派給此操作類型。"
 
 #. module: stock
 #: model:ir.model.fields,help:stock.field_product_product__property_stock_production
@@ -9514,6 +9566,14 @@ msgstr "您不能更改已使用的產品類型."
 
 #. module: stock
 #. odoo-python
+#: code:addons/stock/models/stock_orderpoint.py:0
+#, python-format
+msgid ""
+"You can not create a snoozed orderpoint that is not manually triggered."
+msgstr "你不可建立並非手動觸發的延後訂單點。"
+
+#. module: stock
+#. odoo-python
 #: code:addons/stock/models/stock_move_line.py:0
 #, python-format
 msgid ""
@@ -9548,6 +9608,15 @@ msgstr "您只能輸入正整數."
 #, python-format
 msgid "You can only process 1.0 %s of products with unique serial number."
 msgstr "只能處理1.0個%s具有唯一序號的產品."
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_orderpoint.py:0
+#, python-format
+msgid ""
+"You can only snooze manual orderpoints. You should rather archive 'auto-"
+"trigger' orderpoints if you do not want them to be triggered."
+msgstr "你只可延後手動訂單點。若不想觸發「自動觸發」的訂單點，請將它們封存。"
 
 #. module: stock
 #. odoo-python
@@ -9646,6 +9715,24 @@ msgid ""
 "You cannot move the same package content more than once in the same transfer"
 " or split the same package into two location."
 msgstr "您不能在同一調撥中多次移動同一包裝內容，或將同一包裝拆分到兩個位置."
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_picking.py:0
+#, python-format
+msgid ""
+"You cannot pack products into the same package when they are from both "
+"immediate and planned transfers."
+msgstr ""
+
+#. module: stock
+#. odoo-python
+#: code:addons/stock/models/stock_picking.py:0
+#, python-format
+msgid ""
+"You cannot pack products into the same package when they are from different "
+"transfers with different operation types."
+msgstr "若產品來自不同操作類型的不同轉移，便不能包裝至同一包裹中。"
 
 #. module: stock
 #. odoo-python
@@ -9751,6 +9838,8 @@ msgid ""
 "You have product(s) in stock that have lot/serial number tracking enabled. \n"
 "Switch off tracking on all the products before switching off this setting."
 msgstr ""
+"您有庫存產品已啟用批次/序號追蹤。\n"
+"在關閉此設置之前, 請先關閉所有產品的跟蹤功能。"
 
 #. module: stock
 #. odoo-python
@@ -9939,6 +10028,7 @@ msgid "e.g. CW"
 msgstr "例：CW"
 
 #. module: stock
+#: model_terms:ir.ui.view,arch_db:stock.stock_location_route_form_view
 #: model_terms:ir.ui.view,arch_db:stock.view_warehouse
 msgid "e.g. Central Warehouse"
 msgstr "例如: 中央倉庫"

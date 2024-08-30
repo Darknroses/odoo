@@ -94,6 +94,20 @@ msgid "%s product(s) found for \"%s\"."
 msgstr "%s prodotto(i) trovato(i) per \"%s\"."
 
 #. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+#, python-format
+msgid "%s untaxed"
+msgstr "Imponibile %s"
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+#, python-format
+msgid "%s with %s"
+msgstr "%s con %s"
+
+#. module: point_of_sale
 #. odoo-javascript
 #: code:addons/point_of_sale/static/src/xml/Screens/ReceiptScreen/ReceiptScreen.xml:0
 #, python-format
@@ -957,11 +971,11 @@ msgstr "Buffer:"
 #: model:ir.model.fields,help:point_of_sale.field_pos_config__limited_partners_loading
 #: model:ir.model.fields,help:point_of_sale.field_res_config_settings__pos_limited_partners_loading
 msgid ""
-"By default, 100 partners are loaded.\n"
+"By default, 10000 partners are loaded.\n"
 "When the session is open, we keep on loading all remaining partners in the background.\n"
 "In the meantime, you can use the 'Load Customers' button to load partners from database."
 msgstr ""
-"Per impostazione predefinita, vengono caricati 100 partner.\n"
+"Per impostazione predefinita, vengono caricati 10000 partner.\n"
 "Quando la sessione è aperta, continuiamo a caricare tutti i partner rimanenti nello sfondo.\n"
 "Nel frattempo, puoi usare il pulsante 'Carica clienti' per caricare i partner dal database."
 
@@ -3805,6 +3819,8 @@ msgstr ""
 #, python-format
 msgid "Only administrators can edit receipt headers and footers"
 msgstr ""
+"Solo gli amministratori possono modificare le intestazioni e i piè pagina "
+"delle ricevute"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config__only_round_cash_method
@@ -5272,6 +5288,8 @@ msgstr "Aggiorna schermata"
 
 #. module: point_of_sale
 #. odoo-javascript
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
 #: code:addons/point_of_sale/static/src/js/Screens/TicketScreen/TicketScreen.js:0
 #: code:addons/point_of_sale/static/src/xml/Screens/ProductScreen/ControlButtons/RefundButton.xml:0
 #: code:addons/point_of_sale/static/src/xml/Screens/ProductScreen/ControlButtons/RefundButton.xml:0
@@ -5548,6 +5566,13 @@ msgstr "Numero righe di vendita"
 #: model:ir.actions.act_window,name:point_of_sale.action_pos_order_line_form
 msgid "Sale line"
 msgstr "Riga vendita"
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+#, python-format
+msgid "Sales"
+msgstr "Vendite"
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_report_pos_details
@@ -6373,11 +6398,11 @@ msgstr ""
 #: code:addons/point_of_sale/static/src/js/Screens/PaymentScreen/PaymentScreen.js:0
 #, python-format
 msgid ""
-"The amount of your payment lines must be rounded to validate the "
-"transaction."
+"The amount of your payment lines must be rounded to validate the transaction.\n"
+"The rounding precision is %s so you should set %s or %s as payment amount instead of %s."
 msgstr ""
-"Per convalidare l'operazione, l'importo delle righe di pagamento deve essere"
-" arrotondato."
+"L'importo delle righe di pagamento deve essere arrotondato per convalidare la transazione.\n"
+"La precisione di arrotondamento è pari a %s così da impostare %s o %s come importo del pagamento invece di %s."
 
 #. module: point_of_sale
 #. odoo-javascript
@@ -6496,12 +6521,10 @@ msgstr ""
 #, python-format
 msgid ""
 "The maximum difference allowed is %s.\n"
-"\n"
-"                        Please contact your manager to accept the closing difference."
+"Please contact your manager to accept the closing difference."
 msgstr ""
-"La differenza massima permessa è %s.\n"
-"\n"
-"                        Contatta il tuo manager affinché accetti la differenza di chiusura."
+"La differenza massima consentita è %s. \n"
+"Contatta il tuo manager affinché accetti la differenza di chiusura."
 
 #. module: point_of_sale
 #. odoo-python

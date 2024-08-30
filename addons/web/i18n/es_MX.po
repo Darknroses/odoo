@@ -895,7 +895,7 @@ msgstr "¿Está seguro de que desea archivar este registro?"
 #: code:addons/web/static/src/legacy/js/views/kanban/kanban_column.js:0
 #, python-format
 msgid "Are you sure that you want to remove this column ?"
-msgstr "¿Está seguro de que desea remover esta columna?"
+msgstr "¿Está seguro de que desea eliminar esta columna?"
 
 #. module: web
 #. odoo-javascript
@@ -2435,7 +2435,7 @@ msgstr "Filtros"
 #: code:addons/web/static/src/views/pivot/pivot_controller.xml:0
 #, python-format
 msgid "Flip axis"
-msgstr "Girar eje"
+msgstr "Invertir eje"
 
 #. module: web
 #. odoo-javascript
@@ -2639,14 +2639,14 @@ msgstr ""
 #: code:addons/web/static/src/legacy/xml/base.xml:0
 #, python-format
 msgid "Hide in Kanban"
-msgstr "Ocultar en el kanban"
+msgstr "Ocultar en kanban"
 
 #. module: web
 #. odoo-javascript
 #: code:addons/web/static/src/views/fields/many2many_tags/many2many_tags_field.xml:0
 #, python-format
 msgid "Hide in kanban"
-msgstr "Ocultar en el kanban"
+msgstr "Ocultar en kanban"
 
 #. module: web
 #. odoo-javascript
@@ -4775,7 +4775,7 @@ msgstr "Buscar un campo..."
 #: code:addons/web/static/src/core/commands/default_providers.js:0
 #, python-format
 msgid "Search for a command..."
-msgstr "Buscar un comando..."
+msgstr "Busque un comando..."
 
 #. module: web
 #. odoo-javascript
@@ -5182,7 +5182,7 @@ msgstr "Dom"
 #: code:addons/web/static/src/webclient/user_menu/user_menu_items.js:0
 #, python-format
 msgid "Support"
-msgstr "Soporte técnico"
+msgstr "Soporte"
 
 #. module: web
 #. odoo-javascript
@@ -5193,6 +5193,7 @@ msgstr "Error de sintaxis"
 
 #. module: web
 #. odoo-javascript
+#: code:addons/web/static/src/core/commands/command_items.xml:0
 #: code:addons/web/static/src/webclient/user_menu/user_menu_items.xml:0
 #, python-format
 msgid "TIP"
@@ -5497,7 +5498,7 @@ msgstr "Mañana"
 #: code:addons/web/models/models.py:0
 #, python-format
 msgid "Too many items to display."
-msgstr "Demasiados artículos que mostrar."
+msgstr "Demasiados elementos que mostrar."
 
 #. module: web
 #. odoo-javascript
@@ -5928,6 +5929,7 @@ msgstr "Ver intercambiador"
 #: code:addons/web/static/src/legacy/js/views/list/list_controller.js:0
 #: code:addons/web/static/src/legacy/xml/base.xml:0
 #: code:addons/web/static/src/legacy/xml/base.xml:0
+#: code:addons/web/static/src/legacy/xml/control_panel.xml:0
 #: code:addons/web/static/src/search/favorite_menu/favorite_menu.js:0
 #: code:addons/web/static/src/views/fields/domain/domain_field.xml:0
 #: code:addons/web/static/src/views/fields/domain/domain_field.xml:0
@@ -6243,6 +6245,13 @@ msgstr "todos los registros"
 
 #. module: web
 #. odoo-javascript
+#: code:addons/web/static/src/core/commands/command_items.xml:0
+#, python-format
+msgid "and"
+msgstr "y"
+
+#. module: web
+#. odoo-javascript
 #: code:addons/web/static/src/core/domain_selector/domain_selector_branch_operator.xml:0
 #: code:addons/web/static/src/core/domain_selector/domain_selector_branch_operator.xml:0
 #: code:addons/web/static/src/core/domain_selector/domain_selector_branch_operator.xml:0
@@ -6292,7 +6301,7 @@ msgstr "pero la aplicación sí está cargando..."
 #: code:addons/web/static/src/legacy/js/widgets/domain_selector.js:0
 #, python-format
 msgid "child of"
-msgstr "hijo de"
+msgstr "secundario de"
 
 #. module: web
 #. odoo-javascript
@@ -6840,3 +6849,10 @@ msgstr "escriba un texto predeterminado o presione ENTER"
 #, python-format
 msgid "— press"
 msgstr "— presione"
+
+#. module: web
+#. odoo-javascript
+#: code:addons/web/static/src/core/commands/command_items.xml:0
+#, python-format
+msgid "— search for"
+msgstr "— busque"

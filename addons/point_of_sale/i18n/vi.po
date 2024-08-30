@@ -7,7 +7,7 @@
 # Vo Thanh Thuy, 2022
 # Nancy Momoland <thanh.np2502@gmail.com>, 2023
 # Martin Trigaux, 2023
-# Thi Huong Nguyen, 2023
+# Thi Huong Nguyen, 2024
 # Wil Odoo, 2024
 # 
 msgid ""
@@ -91,6 +91,20 @@ msgstr "%s có tổng tiền là %s, bạn có chắc muốn xóa đơn hàng n�
 #, python-format
 msgid "%s product(s) found for \"%s\"."
 msgstr "%s sản phẩm được tìm thấy cho \"%s\"."
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+#, python-format
+msgid "%s untaxed"
+msgstr ""
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+#, python-format
+msgid "%s with %s"
+msgstr "%s với %s"
 
 #. module: point_of_sale
 #. odoo-javascript
@@ -949,13 +963,10 @@ msgstr "Đệm:"
 #: model:ir.model.fields,help:point_of_sale.field_pos_config__limited_partners_loading
 #: model:ir.model.fields,help:point_of_sale.field_res_config_settings__pos_limited_partners_loading
 msgid ""
-"By default, 100 partners are loaded.\n"
+"By default, 10000 partners are loaded.\n"
 "When the session is open, we keep on loading all remaining partners in the background.\n"
 "In the meantime, you can use the 'Load Customers' button to load partners from database."
 msgstr ""
-"Theo mặc định, 100 đối tác được tải.\n"
-"Khi phiên mở, chúng tôi tiếp tục tải ngầm tất cả đối tác còn lại.\n"
-"Trong khi đó, bạn có thể sử dụng nút 'Tải khách hàng' để tải đối tác từ cơ sở dữ liệu. "
 
 #. module: point_of_sale
 #: model:ir.model.fields,help:point_of_sale.field_pos_config__iface_print_via_proxy
@@ -3789,6 +3800,7 @@ msgstr ""
 #, python-format
 msgid "Only administrators can edit receipt headers and footers"
 msgstr ""
+"Chỉ quản trị viên mới có thể chỉnh sửa đầu trang và chân trang của biên lai"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_config__only_round_cash_method
@@ -4290,7 +4302,7 @@ msgstr "Yêu cầu thanh toán đang chờ"
 #: code:addons/point_of_sale/static/src/xml/Screens/PaymentScreen/PaymentScreenPaymentLines.xml:0
 #, python-format
 msgid "Payment reversed"
-msgstr "Thanh toán được đảo lại"
+msgstr "Thanh toán đã được hoàn lại"
 
 #. module: point_of_sale
 #. odoo-python
@@ -5255,6 +5267,8 @@ msgstr "Làm mới màn hình"
 
 #. module: point_of_sale
 #. odoo-javascript
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
 #: code:addons/point_of_sale/static/src/js/Screens/TicketScreen/TicketScreen.js:0
 #: code:addons/point_of_sale/static/src/xml/Screens/ProductScreen/ControlButtons/RefundButton.xml:0
 #: code:addons/point_of_sale/static/src/xml/Screens/ProductScreen/ControlButtons/RefundButton.xml:0
@@ -5429,7 +5443,7 @@ msgstr "Thử lại"
 #: model_terms:ir.ui.view,arch_db:point_of_sale.view_pos_pos_form
 #, python-format
 msgid "Return Products"
-msgstr "Trả lại hàng"
+msgstr "Trả hàng"
 
 #. module: point_of_sale
 #: model:ir.model.fields,field_description:point_of_sale.field_pos_order__amount_return
@@ -5529,6 +5543,13 @@ msgstr "Đếm dòng bán hàng"
 #: model:ir.actions.act_window,name:point_of_sale.action_pos_order_line_form
 msgid "Sale line"
 msgstr "Dòng bán hàng"
+
+#. module: point_of_sale
+#. odoo-python
+#: code:addons/point_of_sale/models/pos_session.py:0
+#, python-format
+msgid "Sales"
+msgstr "Bán hàng"
 
 #. module: point_of_sale
 #: model:ir.actions.act_window,name:point_of_sale.action_report_pos_details
@@ -6343,10 +6364,9 @@ msgstr ""
 #: code:addons/point_of_sale/static/src/js/Screens/PaymentScreen/PaymentScreen.js:0
 #, python-format
 msgid ""
-"The amount of your payment lines must be rounded to validate the "
-"transaction."
+"The amount of your payment lines must be rounded to validate the transaction.\n"
+"The rounding precision is %s so you should set %s or %s as payment amount instead of %s."
 msgstr ""
-"Số tiền của chi tiết thanh toán phải được làm tròn để xác nhận giao dịch. "
 
 #. module: point_of_sale
 #. odoo-javascript
@@ -6458,12 +6478,10 @@ msgstr ""
 #, python-format
 msgid ""
 "The maximum difference allowed is %s.\n"
-"\n"
-"                        Please contact your manager to accept the closing difference."
+"Please contact your manager to accept the closing difference."
 msgstr ""
 "Chênh lệch tối đa được phép là %s.\n"
-"\n"
-"                        Vui lòng liên hệ với quản lý của bạn để chấp nhận chênh lệch đóng phiên."
+"Vui lòng liên hệ với quản lý của bạn để phê duyệt chênh lệch đóng phiên."
 
 #. module: point_of_sale
 #. odoo-python
@@ -6772,7 +6790,7 @@ msgstr "Không có phương thức thanh toán tiền mặt cho phiên PoS này"
 #: code:addons/point_of_sale/models/pos_session.py:0
 #, python-format
 msgid "There is no cash register in this session."
-msgstr "Không có ghi nhận tiền mặt cho phiên này. "
+msgstr "Không có máy tính tiền cho phiên này. "
 
 #. module: point_of_sale
 #. odoo-python

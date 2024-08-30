@@ -563,6 +563,22 @@ QUnit.module("Views", (hooks) => {
         }
     );
 
+    QUnit.test("list view with button with invisible: true attrs", async function (assert) {
+        await makeView({
+            type: "list",
+            resModel: "foo",
+            serverData,
+            arch: `
+                <tree>
+                    <field name="foo"/>
+                    <button name="a" type="object" icon="fa-car" attrs="{'invisible': true}"/>
+                </tree>`,
+        });
+
+        assert.containsN(target, "th", 3);
+        assert.containsNone(target, "td.o_list_button button");
+    });
+
     QUnit.test("list view with adjacent buttons and optional field", async function (assert) {
         await makeView({
             type: "list",
@@ -1224,16 +1240,6 @@ QUnit.module("Views", (hooks) => {
         await click(target, ".o_list_view");
         assert.containsN(target, ".o_data_row", 5);
         assert.containsNone(target, ".o_selected_row");
-    });
-
-    QUnit.test("boolean field has no title (data-tooltip)", async function (assert) {
-        await makeView({
-            type: "list",
-            resModel: "foo",
-            serverData,
-            arch: '<tree><field name="bar"/></tree>',
-        });
-        assert.strictEqual(target.querySelector(".o_data_cell").getAttribute("data-tooltip"), null);
     });
 
     QUnit.test("field with nolabel has no title", async function (assert) {
@@ -3496,6 +3502,35 @@ QUnit.module("Views", (hooks) => {
             "No (1)"
         );
     });
+
+    QUnit.test(
+        "groups can be sorted when list is grouped by date with granularity",
+        async function (assert) {
+            serverData.models.foo.fields.date = { sortable: true };
+            await makeView({
+                type: "list",
+                resModel: "foo",
+                serverData,
+                groupBy: ["date:year"],
+                arch: `
+                <tree editable="bottom">
+                    <field name="foo"/>
+                    <field name="date"/>
+                </tree>`,
+                mockRPC(route, args) {
+                    if (args.method === "web_read_group") {
+                        assert.step(args.kwargs.orderby || "default order");
+                    }
+                },
+            });
+
+            assert.containsN(target, ".o_group_header", 2);
+            assert.containsNone(target, ".o_data_row");
+
+            await click(target.querySelector(".o_column_sortable[data-name='date']"));
+            assert.verifySteps(["default order", "date ASC"]);
+        }
+    );
 
     QUnit.test(
         "groups can't be sorted on aggregates if there is no record",
@@ -5982,6 +6017,47 @@ QUnit.module("Views", (hooks) => {
         await click(target, ".o_back_button");
     });
 
+    QUnit.test("grouped list keeps offset on switchView", async (assert) => {
+        assert.expect(8);
+        serverData.views = {
+            "foo,false,search": `
+                <search>
+                    <filter string="IntField" name="groupby" domain="[]" context="{'group_by': 'int_field'}"/>
+                </search>`,
+            "foo,99,list": `<list groups_limit="1"><field name="display_name" /></list>`,
+            "foo,100,form": `<form><field name="display_name" /></form>`,
+        };
+
+        const offsets = [0, 1, 1];
+        const mockRPC = async (route, args) => {
+            if (args.method === "web_read_group") {
+                assert.strictEqual(args.kwargs.offset, offsets.shift());
+            }
+        };
+        const wc = await createWebClient({ serverData, mockRPC });
+        await doAction(wc, {
+            res_model: "foo",
+            type: "ir.actions.act_window",
+            views: [
+                [99, "list"],
+                [100, "form"],
+            ],
+            context: {
+                search_default_groupby: true,
+            },
+        });
+
+        assert.containsOnce(target, ".o_list_view");
+        await click(target, ".o_pager_next");
+        assert.containsNone(target, ".o_data_row");
+        await click(target, ".o_group_header");
+        assert.containsOnce(target, ".o_data_row");
+        await click(target, ".o_data_cell");
+        assert.containsOnce(target, ".o_form_view");
+        await click(target, ".o_back_button");
+        assert.containsOnce(target, ".o_data_row");
+    });
+
     QUnit.test("can sort records when clicking on header", async function (assert) {
         serverData.models.foo.fields.foo.sortable = true;
 
@@ -6348,11 +6424,8 @@ QUnit.module("Views", (hooks) => {
 
         await mouseEnter(target.querySelector("th[data-name=foo]"));
         await nextTick(); // GES: see next nextTick comment
-        assert.strictEqual(
-            target.querySelectorAll(".o-tooltip .o-tooltip--technical").length,
-            0,
-            "should not have rendered a tooltip"
-        );
+        assert.strictEqual(target.querySelectorAll(".o-tooltip").length, 1);
+        assert.strictEqual(target.querySelector(".o-tooltip").innerText, "Foo");
 
         patchWithCleanup(odoo, {
             debug: true,
@@ -6381,6 +6454,28 @@ QUnit.module("Views", (hooks) => {
             ]),
             ["Widget:Favorite (boolean_favorite) "],
             "widget description should be correct"
+        );
+    });
+
+    QUnit.test("field (with help) tooltip in non debug mode", async function (assert) {
+        patchWithCleanup(odoo, {
+            debug: false,
+        });
+
+        serverData.models.foo.fields.foo.help = "This is a foo field";
+        await makeView({
+            type: "list",
+            resModel: "foo",
+            serverData,
+            arch: `<tree><field name="foo"/></tree>`,
+        });
+
+        await mouseEnter(target.querySelector("th[data-name=foo]"));
+        await nextTick();
+        assert.strictEqual(target.querySelectorAll(".o-tooltip").length, 1);
+        assert.strictEqual(
+            target.querySelector(".o-tooltip").innerText,
+            "Foo\nThis is a foo field"
         );
     });
 
@@ -11854,10 +11949,9 @@ QUnit.module("Views", (hooks) => {
             await editInput(target, ".o_field_many2one input", "abcdef");
             await nextTick();
 
-            // simulate focus out
-            await triggerEvent(target, ".o_field_many2one input", "blur");
+            await click(target, ".o_m2o_dropdown_option_create_edit");
 
-            assert.containsOnce(target, ".modal", "should ask confirmation to create a record");
+            assert.containsOnce(target, ".modal", "should show dialog to create the record");
             assert.containsOnce(target, ".o_data_row", "the row should still be there");
         }
     );
@@ -15310,13 +15404,9 @@ QUnit.module("Views", (hooks) => {
 
         const input = target.querySelector(".o_data_row .o_data_cell input");
         await editInput(input, null, "aaa");
-        await triggerEvents(input, null, ["keyup", "blur"]);
-        document.body.click();
+        await triggerEvents(input, null, ["keyup"]);
+        await triggerHotkey("tab");
         await nextTick();
-        assert.containsOnce(target, ".modal", "the quick_create modal should appear");
-
-        await click(target.querySelector(".modal .btn-primary"));
-        await click(target.querySelector(".o_list_view"));
         assert.strictEqual(
             target.getElementsByClassName("o_data_cell")[0].innerHTML,
             "aaa",
