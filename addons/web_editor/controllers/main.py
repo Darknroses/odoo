@@ -309,15 +309,13 @@ class Web_Editor(http.Controller):
         if is_image:
             format_error_msg = _("Uploaded image's format is not supported. Try with: %s", ', '.join(SUPPORTED_IMAGE_EXTENSIONS))
             try:
-                data = tools.image_process(data, size=(width, height), quality=quality, verify_resolution=True)
                 mimetype = guess_mimetype(data)
                 if mimetype not in SUPPORTED_IMAGE_MIMETYPES:
                     return {'error': format_error_msg}
-            except UserError:
-                # considered as an image by the browser file input, but not
-                # recognized as such by PIL, eg .webp
-                return {'error': format_error_msg}
-            except ValueError as e:
+                data = tools.image_process(data, size=(width, height), quality=quality, verify_resolution=True)
+            except (ValueError, UserError) as e:
+                # When UserError thrown, browser considers file input an
+                # image but not recognized as such by PIL, eg .webp
                 return {'error': e.args[0]}
 
         self._clean_context()
@@ -755,6 +753,15 @@ class Web_Editor(http.Controller):
         img = binary_to_image(image)
         width, height = tuple(str(size) for size in img.size)
         root = etree.fromstring(svg)
+
+        if root.attrib.get("data-forced-size"):
+            # Adjusts the SVG height to ensure the image fits properly within
+            # the SVG (e.g. for "devices" shapes).
+            svgHeight = float(root.attrib.get("height"))
+            svgWidth = float(root.attrib.get("width"))
+            svgAspectRatio = svgWidth / svgHeight
+            height = str(float(width) / svgAspectRatio)
+
         root.attrib.update({'width': width, 'height': height})
         # Update default color palette on shape SVG.
         svg, _ = self._update_svg_colors(kwargs, etree.tostring(root, pretty_print=True).decode('utf-8'))
